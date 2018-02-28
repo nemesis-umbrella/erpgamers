@@ -17,10 +17,13 @@ public class Configuracion {
         switch(opcion){
             case 1: 
                 color = new Color(255,255,255);
+                break;
             case 2: 
                 color = new Color(255,255,255);
+                break;
             default:
                 color = new Color(245,240,200);
+                break;
         }
         return color;
     }
