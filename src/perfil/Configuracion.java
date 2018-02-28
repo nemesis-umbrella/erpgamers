@@ -9,7 +9,7 @@ import java.awt.Color;
 
 /**
  *
- * @author Jorge L. Mondragón (nemesis_umbrella@outlook.com)
+ * @author Jorge L. Mondragón <nemesis_umbrella@outlook.com>
  */
 public class Configuracion {
     Color color;
