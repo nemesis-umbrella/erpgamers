@@ -5,17 +5,23 @@
  */
 package rechumanos;
 
+import javax.swing.ImageIcon;
+import recursos.Imagenes;
 /**
  *
  * @author poron
  */
 public class RecHumanos extends javax.swing.JFrame {
-
+    Imagenes ajustar;
     /**
      * Creates new form RecHumanos
      */
     public RecHumanos() {
         initComponents();
+        ajustar = new Imagenes();
+        //ImageIcon fondo = ajustar;
+        jLabel1.setText("");
+        jLabel1.setIcon(ajustar.ajustarImagen("src/recursos/fondo.jpg", jLabel1.getHeight(),jLabel1.getWidth()));
     }
 
     /**
@@ -31,18 +37,23 @@ public class RecHumanos extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setBackground(new java.awt.Color(255, 51, 51));
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\tese\\Pictures\\fondo.jpg")); // NOI18N
+        jLabel1.setText("jLabel1");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 366, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(24, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(34, 34, 34)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(36, Short.MAX_VALUE))
         );
 
         pack();
