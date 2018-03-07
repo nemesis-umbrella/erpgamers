@@ -11,6 +11,7 @@ import menuprincipal.MenuPrincipal;
  */
 public class Main {
     public static void main(String[] args){
+        System.out.println("Hola mundo");
         MenuPrincipal menu = new MenuPrincipal();
         menu.setVisible(true);
         menu.setResizable(false);
