@@ -5,40 +5,37 @@
  */
 package conexion;
 
-import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
+import java.sql.SQLException;
+
 /**
  *
  * @author nemesis-umbrella
  */
 public class Conexion {
-    public Conexion()
-    {
-        try {
-            //Se registra el driver de MySQL
-            DriverManager.registerDriver(new org.gjt.mm.mysql.Driver());
-            // Se obtiene una conexión con la base de datos. Hay que 
-            String URL = "jdbc:mysql://localhost/Prueba";
-            Connection conexion = DriverManager.getConnection(URL,"Prueba","Ab12345");
-            //Se crea un Statement, para realizar la consulta.
-            Statement s = conexion.createStatement();
-            //Se realiza la consulta. Los resultado se guardan en el ResultSet rs
-            ResultSet rs = s.executeQuery("select * from persona");
-            
-            //Se recorre el ResultSet, mostrando por pantalla los resultados.
-            while(rs.next()){
-                System.out.println(rs.getInt("id") + " " + rs.getString(2) + " " + rs.getString(3) + " " + rs.getString(4));
+    private static String server="localhost";
+    private static String database="Prueba";
+    private static String user = "root";
+    private static String password = "";
+    private static Connection cnx = null;
+    public static Connection obtener() throws SQLException, ClassNotFoundException {
+        if (cnx == null) {
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                cnx = DriverManager.getConnection("jdbc:mysql://"+server+"/"+database, user, password);
+            } catch (SQLException ex) {
+                throw new SQLException(ex);
+            } catch (ClassNotFoundException ex) {
+                throw new ClassCastException(ex.getMessage());
             }
-            //Se cierra la conexión con la base de datos.
-        } catch (Exception e) {
-            e.printStackTrace();
+        }
+        return cnx;
+    }
+
+    public static void cerrar() throws SQLException {
+        if (cnx != null) {
+            cnx.close();
         }
     }
-    //Creación temporal de un método main para pruebas
-    public static void main(String[] args){
-        new Conexion();
-    }
-            
 }
