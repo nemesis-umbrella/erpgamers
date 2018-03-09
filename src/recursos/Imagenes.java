@@ -13,7 +13,7 @@ import javax.swing.ImageIcon;
  * @author Jorge L. Mondragón <nemesis_umbrella@outlook.com>
  */
 public class Imagenes {
-    public ImageIcon ajustarImagen(String ico, int alto, int ancho)
+    public static ImageIcon ajustarImagen(String ico, int alto, int ancho)
     {
         ImageIcon tmpIconAux = new ImageIcon(ico);
         //Escalar Imagen
