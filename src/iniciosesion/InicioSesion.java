@@ -6,14 +6,16 @@
 package iniciosesion;
 
 import java.awt.Color;
+import javax.swing.ImageIcon;
 import recursos.Imagenes;
 import recursos.Colores;
 import recursos.Fuente;
+
 /**
  *
  * @author Jorge L. Mondragón <nemesis_umbrella@outlook.com>
  */
-public class InicioSesion extends javax.swing.JFrame{
+public class InicioSesion extends javax.swing.JFrame {
 
     /**
      * Creates new form InicioSesion
@@ -22,15 +24,15 @@ public class InicioSesion extends javax.swing.JFrame{
         initComponents();
         configuracion();
     }
-    
-    public void configuracion(){
+
+    public void configuracion() {
         setTitle("Inicio de sesión");
         //El siguiente método permite poner un fondo a la ventana
         getContentPane().setBackground(Colores.colorAzul());
         //El siguiente método permite poner un icono a la ventana
         setIconImage(new javax.swing.ImageIcon(getClass().getResource("/Images/icono.png")).getImage());
         //Se asigana una image al jLogo
-        jLogo.setIcon(Imagenes.ajustarImagen("src/Images/logogamers_blanco.png", jLogo.getHeight(), jLogo.getWidth()));
+        jLogo.setIcon(Imagenes.ajustarImagen("src/Images/logogamers_blanco.png", jLogo.getWidth(), jLogo.getHeight()));
         //Este método centra la ventana en la pantalla
         setLocationRelativeTo(null);
         //Se fija la fuente y el color para el label de usuario
@@ -42,14 +44,20 @@ public class InicioSesion extends javax.swing.JFrame{
         //Se fija el color del textBox usuario
         jTextUsuario.setFont(Fuente.fuenteTexto14());
         jTextUsuario.setForeground(Color.BLUE);
+        jTextUsuario.setBackground(Colores.colorBlancoOsc());
         //Se fija el color del JPassword
         jPassword.setFont(Fuente.fuenteTexto14());
         jPassword.setForeground(Color.BLUE);
+        jPassword.setBackground(Colores.colorBlancoOsc());
         //Se fija el color para el JButton Iniciar Sesión
         jButtonInicio.setFont(Fuente.fuenteTexto14());
         jButtonInicio.setBackground(Color.WHITE);
         jButtonInicio.setForeground(Color.BLUE);
+        //Se fija el color el JLabelCopyRight
+        jLabelCopyright.setFont(Fuente.fuenteTexto12());
+        jLabelCopyright.setForeground(Color.WHITE);
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -65,6 +73,7 @@ public class InicioSesion extends javax.swing.JFrame{
         jLabelPassword = new javax.swing.JLabel();
         jPassword = new javax.swing.JPasswordField();
         jButtonInicio = new javax.swing.JButton();
+        jLabelCopyright = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -73,6 +82,8 @@ public class InicioSesion extends javax.swing.JFrame{
         jLabelPassword.setText("Contraseña: ");
 
         jButtonInicio.setText("Iniciar sesión");
+
+        jLabelCopyright.setText("©2018 Gamers Retail ");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -92,12 +103,14 @@ public class InicioSesion extends javax.swing.JFrame{
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabelUsuario)
                                     .addComponent(jLabelPassword))
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                                .addGap(0, 314, Short.MAX_VALUE)))))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 176, Short.MAX_VALUE)
-                .addComponent(jButtonInicio)
-                .addGap(138, 138, 138))
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabelCopyright)
+                    .addComponent(jButtonInicio))
+                .addGap(140, 140, 140))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -112,9 +125,11 @@ public class InicioSesion extends javax.swing.JFrame{
                 .addComponent(jLabelPassword)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addGap(36, 36, 36)
                 .addComponent(jButtonInicio)
-                .addGap(34, 34, 34))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addComponent(jLabelCopyright)
+                .addGap(24, 24, 24))
         );
 
         pack();
@@ -157,6 +172,7 @@ public class InicioSesion extends javax.swing.JFrame{
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonInicio;
+    private javax.swing.JLabel jLabelCopyright;
     private javax.swing.JLabel jLabelPassword;
     private javax.swing.JLabel jLabelUsuario;
     private javax.swing.JLabel jLogo;
