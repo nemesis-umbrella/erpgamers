@@ -20,4 +20,9 @@ public class Colores {
         Color color = new Color(255, 255, 255);
         return color;
     }
+    
+    public static Color colorBlancoOsc(){ 
+       Color color = new Color(224,224,224);
+       return color;
+    }
 }
