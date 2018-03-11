@@ -4,17 +4,16 @@
  * Creado el 24/02/2018
  */
 package sistema;
-import menuprincipal.MenuPrincipal;
+import iniciosesion.InicioSesion;
 /**
  *
  * @author nemesis
  */
 public class Main { 
     public static void main(String[] args){
-        
-        MenuPrincipal menu = new MenuPrincipal();
-        menu.setVisible(true);
-        menu.setResizable(false);
-        menu.setLocationRelativeTo(null);   
+        InicioSesion inicio = new InicioSesion();
+        inicio.setVisible(true);
+        inicio.setResizable(false);
+        inicio.setLocationRelativeTo(null);   
     }
 }
