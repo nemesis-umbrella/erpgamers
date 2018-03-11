@@ -5,6 +5,9 @@
  */
 package menuprincipal;
 
+import javax.swing.ImageIcon;
+import recursos.Colores;
+import recursos.Imagenes;
 /**
  *
  * @author nemesis-umbrella
@@ -17,6 +20,13 @@ public class MenuPrincipal extends javax.swing.JFrame {
     public MenuPrincipal() {
         initComponents();
         setTitle("Menú principal");
+        setIconImage(new ImageIcon(getClass().getResource("/Images/icono.png")).getImage());
+        getContentPane().setBackground(Colores.colorAzul());
+        jMenuPerfil.setIcon(new ImageIcon(getClass().getResource("/Images/menu/icon-user.png")));
+        jMenuColor.setIcon(new ImageIcon(getClass().getResource("/Images/menu/fondo.png")));
+        jMenuCerrarSesion.setIcon(new ImageIcon(getClass().getResource("/Images/menu/cerrar.png")));
+        jMenuSalir.setIcon(new ImageIcon(getClass().getResource("/Images/menu/salir.png")));
+        jMenuAcercaDe.setIcon(new ImageIcon(getClass().getResource("/Images/menu/acerca.png")));
     }
 
     /**
@@ -28,11 +38,66 @@ public class MenuPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        jBienvenido = new javax.swing.JLabel();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuPerfil = new javax.swing.JMenuItem();
+        jMenuColor = new javax.swing.JMenu();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
+        jMenuItem6 = new javax.swing.JMenuItem();
+        jMenuCerrarSesion = new javax.swing.JMenuItem();
+        jMenuSalir = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        jMenuAcercaDe = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("Hola mundo");
+        jBienvenido.setText("Hola mundo");
+
+        jMenu1.setText("Opciones");
+
+        jMenuPerfil.setText("Perfil");
+        jMenu1.add(jMenuPerfil);
+
+        jMenuColor.setText("Color de fondo");
+
+        jMenuItem3.setText("Default");
+        jMenuColor.add(jMenuItem3);
+
+        jMenuItem4.setText("Negro");
+        jMenuColor.add(jMenuItem4);
+
+        jMenuItem5.setText("Rojo");
+        jMenuColor.add(jMenuItem5);
+
+        jMenuItem6.setText("Morado");
+        jMenuColor.add(jMenuItem6);
+
+        jMenu1.add(jMenuColor);
+
+        jMenuCerrarSesion.setText("Cerrar sesión");
+        jMenu1.add(jMenuCerrarSesion);
+
+        jMenuSalir.setText("Salir");
+        jMenuSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuSalirActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuSalir);
+
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Ayuda");
+
+        jMenuAcercaDe.setText("Acerca de");
+        jMenu2.add(jMenuAcercaDe);
+
+        jMenuBar1.add(jMenu2);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -40,19 +105,23 @@ public class MenuPrincipal extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(140, 140, 140)
-                .addComponent(jLabel1)
-                .addContainerGap(204, Short.MAX_VALUE))
+                .addComponent(jBienvenido)
+                .addContainerGap(440, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(87, 87, 87)
-                .addComponent(jLabel1)
-                .addContainerGap(199, Short.MAX_VALUE))
+                .addComponent(jBienvenido)
+                .addContainerGap(252, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jMenuSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuSalirActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuSalirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -84,12 +153,26 @@ public class MenuPrincipal extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MenuPrincipal().setVisible(true);
+                MenuPrincipal principal =  new MenuPrincipal();
+                principal.setVisible(true);
+                principal.setLocationRelativeTo(null);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jBienvenido;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuItem jMenuAcercaDe;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuCerrarSesion;
+    private javax.swing.JMenu jMenuColor;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuPerfil;
+    private javax.swing.JMenuItem jMenuSalir;
     // End of variables declaration//GEN-END:variables
 }
