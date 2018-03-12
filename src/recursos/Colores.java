@@ -13,16 +13,21 @@ import java.awt.Color;
  */
 public class Colores {
     public static Color colorAzul(){
-        Color color = new Color(0, 71, 179);
-        return color;
+        return new Color(0, 71, 179);
     }
     public static Color colorBlanco(){
-        Color color = new Color(255, 255, 255);
-        return color;
+        return new Color(255, 255, 255);
     }
     
     public static Color colorBlancoOsc(){ 
-       Color color = new Color(224,224,224);
-       return color;
+       return new Color(224,224,224);
+    }
+    
+    public static Color colorRojo(){
+        return new Color(178,0,44);
+    }
+    
+    public static Color colorMorado(){
+        return new Color(80,0,255);
     }
 }
