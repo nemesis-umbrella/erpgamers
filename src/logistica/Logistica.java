@@ -5,6 +5,12 @@
  */
 package logistica;
 
+import java.awt.Color;
+import javax.swing.ImageIcon;
+import recursos.Colores;
+import recursos.Fuente;
+import recursos.Imagenes;
+
 /**
  *
  * @author poron
@@ -16,7 +22,40 @@ public class Logistica extends javax.swing.JFrame {
      */
     public Logistica() {
         initComponents();
+        cargar();
     }
+    
+    private void cargar(){
+        //Cofiguración de la ventana
+        setTitle("Menú principal");
+        setIconImage(new ImageIcon(getClass().getResource("/Images/icono.png")).getImage());
+        getContentPane().setBackground(Colores.colorAzul());
+        
+        //Cargar de fuente a los labels
+        //Título del formulario
+        jLabelTitulo.setFont(Fuente.fuenteTitulos());
+        jLabelTitulo.setForeground(Color.WHITE);
+        //Label de flota
+        jLabelFlota.setFont(Fuente.fuenteTexto14());
+        jLabelFlota.setForeground(Color.WHITE);
+        //Label de rutas
+        jLabelRutas.setFont(Fuente.fuenteTexto14());
+        jLabelRutas.setForeground(Color.WHITE);
+        //Label de agenda
+        jLabelAgenda.setFont(Fuente.fuenteTexto14());
+        jLabelAgenda.setForeground(Color.WHITE);
+        
+        //Carga de imagenes a botones
+        //Botón de rutas
+        jButtonRuta.setIcon(Imagenes.ajustarImagen("src/Images/logistica/maparutas.jpg", jButtonRuta.getWidth(), jButtonRuta.getHeight()));
+        jButtonRuta.setBackground(Colores.colorBlancoOsc());
+        //Botón de flota
+        jButtonFlotilla.setIcon(Imagenes.ajustarImagen("src/Images/logistica/flotilla.png", jButtonFlotilla.getWidth(), jButtonFlotilla.getHeight()));
+        jButtonFlotilla.setBackground(Colores.colorBlancoOsc());
+        //Botón de agenda
+        jButtonAgenda.setIcon(Imagenes.ajustarImagen("src/Images/logistica/agenda.png", jButtonAgenda.getWidth(), jButtonAgenda.getHeight()));
+        jButtonAgenda.setBackground(Colores.colorBlancoOsc());
+    }   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -27,17 +66,95 @@ public class Logistica extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jButtonRuta = new javax.swing.JButton();
+        jButtonAgenda = new javax.swing.JButton();
+        jButtonFlotilla = new javax.swing.JButton();
+        jButtonRegresar = new javax.swing.JButton();
+        jLabelRutas = new javax.swing.JLabel();
+        jLabelFlota = new javax.swing.JLabel();
+        jLabelAgenda = new javax.swing.JLabel();
+        jLabelTitulo = new javax.swing.JLabel();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenu2 = new javax.swing.JMenu();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jButtonRegresar.setBackground(new java.awt.Color(38, 121, 49));
+        jButtonRegresar.setForeground(new java.awt.Color(254, 254, 254));
+        jButtonRegresar.setText("Regresar");
+
+        jLabelRutas.setText("Rutas");
+
+        jLabelFlota.setText("Flota");
+
+        jLabelAgenda.setText("Agenda");
+
+        jLabelTitulo.setText("Menú logística");
+
+        jMenu1.setText("Opciones");
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Ayuda");
+        jMenuBar1.add(jMenu2);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(138, 138, 138)
+                        .addComponent(jLabelAgenda)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButtonRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(142, 142, 142)
+                                .addComponent(jLabelRutas)
+                                .addGap(201, 201, 201)
+                                .addComponent(jLabelFlota))
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabelTitulo))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(100, 100, 100)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jButtonRuta, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(95, 95, 95)
+                                        .addComponent(jButtonFlotilla, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jButtonAgenda, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(0, 155, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabelTitulo)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(jButtonFlotilla, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonRuta, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelRutas)
+                    .addComponent(jLabelFlota))
+                .addGap(27, 27, 27)
+                .addComponent(jButtonAgenda, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelAgenda)
+                    .addComponent(jButtonRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         pack();
@@ -73,11 +190,24 @@ public class Logistica extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Logistica().setVisible(true);
+                Logistica log = new Logistica();
+                log.setVisible(true);
+                log.setLocationRelativeTo(null);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonAgenda;
+    private javax.swing.JButton jButtonFlotilla;
+    private javax.swing.JButton jButtonRegresar;
+    private javax.swing.JButton jButtonRuta;
+    private javax.swing.JLabel jLabelAgenda;
+    private javax.swing.JLabel jLabelFlota;
+    private javax.swing.JLabel jLabelRutas;
+    private javax.swing.JLabel jLabelTitulo;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuBar jMenuBar1;
     // End of variables declaration//GEN-END:variables
 }
