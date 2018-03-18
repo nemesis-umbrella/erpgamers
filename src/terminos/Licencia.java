@@ -12,7 +12,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import recursos.Imagenes;
 import menuprincipal.MenuPrincipal;
-import iniciosesion.InicioSesion;
+import iniciosesion.FormInicioSesion;
 /**
  *
  * @author Jorge L. Mondragón <nemesis_umbrella@outlook.com>
@@ -115,7 +115,7 @@ public class Licencia extends JFrame implements ActionListener, ChangeListener {
     }
 
     public void cargarInicioSesion(){
-        InicioSesion princ = new InicioSesion();
+        FormInicioSesion princ = new FormInicioSesion();
         princ.setVisible(true);
         princ.setResizable(false);
         princ.setLocationRelativeTo(null);
