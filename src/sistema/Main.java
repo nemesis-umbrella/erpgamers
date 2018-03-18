@@ -4,14 +4,14 @@
  * Creado el 24/02/2018
  */
 package sistema;
-import iniciosesion.InicioSesion;
+import iniciosesion.FormInicioSesion;
 /**
  *
  * @author nemesis
  */
 public class Main { 
     public static void main(String[] args){
-        InicioSesion inicio = new InicioSesion();
+        FormInicioSesion inicio = new FormInicioSesion();
         inicio.setVisible(true);
         inicio.setResizable(false);
         inicio.setLocationRelativeTo(null);   
