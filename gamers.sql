@@ -189,3 +189,56 @@ create table cuenta(
     fechamod		datetime,
     foreign key(nopoliza) references poliza(nopoliza)
 );
+drop procedure if exists igmdiniciosesion;
+delimiter $$
+create procedure igmdiniciosesion(
+IN _login VARCHAR(50),
+IN _pass			blob,
+IN _nombre 			varchar(50),
+IN _apellidop 		varchar(50),
+IN _apellidom		varchar(50),
+IN _genero			varchar(1),
+IN _email			varchar(100),
+IN _tipo			int,
+IN _activo			bool,
+IN _terminos		bool)
+begin
+if not exists(select * from iniciosesion where login like(_login)) THEN
+	insert into iniciosesion(login,pass,nombre,apellidop,apellidom,genero,email,tipo,fechacreacion,fechamod,ultimaconexion,activo,terminos) 
+    values(_login,aes_encrypt(_pass,'OqZ8e5-pz+*LTeHG'),_nombre,_apellidop,_apellidom,_genero,_email,_tipo,now(),null,null,_activo,false);
+ELSE
+	update iniciosesion set pass=aes_encrypt(_pass,'OqZ8e5-pz+*LTeHG'), nombre=_nombre, apellidop=_apellidop,apellidom=_apellidom,genero=_genero,email=_email,fechamod=now(),activo=_activo,terminos=_terminos where login=_login;
+END IF;
+END
+$$
+call igmdiniciosesion('nemesis-umbrella','Ab123456','Jorge Luis','Mondragón','Zarate','M','nemesis_umbrella@outlook.com',1,false,false);
+drop procedure if exists verificariniciosesion;
+delimiter $$
+create procedure verificariniciosesion(
+IN _login	varchar(50),
+IN _pass	blob)
+begin
+declare _desci varchar(50);
+declare _verificar bool default false;
+if exists (select * from iniciosesion where login=_login) THEN
+	set _desci = (select convert(aes_decrypt(pass,'OqZ8e5-pz+*LTeHG'), char(50))  from iniciosesion where login=_login);
+    if _pass = _desci then
+		set _verificar = (select activo from iniciosesion where login = _login);
+        if _verificar = true then
+			-- significa que el usuario puede ingresar al sistema
+			select '1';
+        else
+            -- significa que el usuario no puede ingresar al sistema
+			select '3';
+        end if;
+	else
+        -- sinfica que el password esta erroneo
+		select '2';
+    end if;
+else
+    -- significa que el usuario no existe
+	select '0';
+end if;
+end;
+$$
+call verificariniciosesion('nemesis-umbrella','Ab123456');
