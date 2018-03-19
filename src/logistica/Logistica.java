@@ -80,6 +80,12 @@ public class Logistica extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jButtonRuta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRutaActionPerformed(evt);
+            }
+        });
+
         jButtonRegresar.setBackground(new java.awt.Color(38, 121, 49));
         jButtonRegresar.setForeground(new java.awt.Color(254, 254, 254));
         jButtonRegresar.setText("Regresar");
@@ -159,6 +165,13 @@ public class Logistica extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButtonRutaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRutaActionPerformed
+        FormRuta ruta = new FormRuta();
+        ruta.setVisible(true);
+        ruta.setLocationRelativeTo(null);
+        dispose();
+    }//GEN-LAST:event_jButtonRutaActionPerformed
 
     /**
      * @param args the command line arguments
