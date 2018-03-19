@@ -15,7 +15,7 @@ import java.sql.SQLException;
  */
 public class Conexion {
     private static String server="localhost";
-    private static String database="Prueba";
+    private static String database="gamers";
     private static String user = "root";
     private static String password = "";
     private static Connection cnx = null;
