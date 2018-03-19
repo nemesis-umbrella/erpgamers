@@ -1,3 +1,4 @@
+drop database if exists gamers;
 create database gamers;
 use gamers;
 -- creaciòn de tablas 
@@ -242,3 +243,5 @@ end if;
 end;
 $$
 call verificariniciosesion('nemesis-umbrella','Ab123456');
+INSERT INTO `gamers`.`ruta` (`idruta`,`alias`, `costo`, `disponibilidad`, `descrip`, `tiempo`, `fechacreacion`, `fechamod`)
+VALUES(null,'Ruta 58',500.50,false,'Ruta poco fiable','01:20:55',now(),null);
