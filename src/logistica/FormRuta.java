@@ -85,6 +85,10 @@ public class FormRuta extends javax.swing.JFrame {
         //Configuración del título de la lista
         jLabelListRutas.setFont(Fuente.fuenteTexto14());
         jLabelListRutas.setForeground(Color.WHITE);
+        
+        //Label de derechos reservados
+        jLabelDerechos.setFont(Fuente.fuenteTexto14());
+        jLabelDerechos.setForeground(Color.WHITE);
     }
     private DefaultTableModel model;//Modelo para tabla
     private int sel = -1;//Variable para obtener fila seleccionada de tabla.
@@ -183,6 +187,7 @@ public class FormRuta extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jButtonRegresar = new javax.swing.JButton();
         jButtonRecargar = new javax.swing.JButton();
+        jLabelDerechos = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuPerfil = new javax.swing.JMenuItem();
@@ -289,6 +294,8 @@ public class FormRuta extends javax.swing.JFrame {
             }
         });
 
+        jLabelDerechos.setText("Copyright © GamersRetail  | Todos los derechos reservados");
+
         jMenu1.setText("Opciones");
 
         jMenuPerfil.setText("Perfil");
@@ -349,10 +356,19 @@ public class FormRuta extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 832, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
+                                .addGap(12, 12, 12)
+                                .addComponent(jLabelTitulo))
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabelListRutas)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 832, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addComponent(jLabelBusqId)
                                 .addGap(3, 3, 3)
                                 .addComponent(jTextFieldBusqId, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -363,19 +379,12 @@ public class FormRuta extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jTextFieldBusqAlias, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButtonBusqAlias))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jButtonBusqAlias))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(12, 12, 12)
-                                .addComponent(jLabelTitulo))
-                            .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jLabelListRutas)))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButtonRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jLabelDerechos)
+                                .addGap(86, 86, 86)
+                                .addComponent(jButtonRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -402,7 +411,9 @@ public class FormRuta extends javax.swing.JFrame {
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonRecargar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
-                .addComponent(jButtonRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelDerechos))
                 .addContainerGap())
         );
 
@@ -577,6 +588,7 @@ public class FormRuta extends javax.swing.JFrame {
     private javax.swing.JButton jButtonRegresar;
     private javax.swing.JLabel jLabelBusqAlias;
     private javax.swing.JLabel jLabelBusqId;
+    private javax.swing.JLabel jLabelDerechos;
     private javax.swing.JLabel jLabelListRutas;
     private javax.swing.JLabel jLabelTitulo;
     private javax.swing.JMenu jMenu1;
