@@ -114,7 +114,7 @@ public class FormRuta extends javax.swing.JFrame {
             for (Ruta ruta : rutas) {
                 model.addRow(new Object[]{
                     ruta.getIdruta(), ruta.getAlias(), ruta.getCosto(), ruta.getDisponibilidad(), ruta.getDescrip(), ruta.getTiempo(), ruta.getFechacreacion(), ruta.getFechamod()
-                });   
+                });
             }
             //Agregamos el JCheckBox utilizando CellEditor y la clase CellRenderer creado más abajo
             jTb.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(check));
@@ -125,41 +125,38 @@ public class FormRuta extends javax.swing.JFrame {
         }
 
     }
-    
+
     //Método para obtener la fila seleccionada de la tabla
-    private void seleccion(){
-        if(jTb.getRowCount() > 0 ){
+    private void seleccion() {
+        if (jTb.getRowCount() > 0) {
             sel = jTb.getSelectedRow();
         }
     }
-    
-    
+
     //Método para eliminar la fila seleccionada de la tabla.
-    private void eliminar() throws SQLException, ClassNotFoundException{
+    private void eliminar() throws SQLException, ClassNotFoundException {
         seleccion();
-        if(sel >= 0){
+        if (sel >= 0) {
             rutaOp.eliminar(Conexion.obtener(), Integer.parseInt(model.getValueAt(sel, 0).toString()));
-            JOptionPane.showMessageDialog(null, "Se ha eliminado la ruta con el ID: "+model.getValueAt(sel, 0));
+            JOptionPane.showMessageDialog(null, "Se ha eliminado la ruta con el ID: " + model.getValueAt(sel, 0));
             model.removeRow(sel);
             sel = -1;
-        }
-        else{
+        } else {
             JOptionPane.showMessageDialog(null, "Selecciona una fila.");
         }
     }
-    
-    private void modificar() throws SQLException, ClassNotFoundException{
-         seleccion();
-        if(sel >= 0){
+
+    private void modificar() throws SQLException, ClassNotFoundException {
+        seleccion();
+        if (sel >= 0) {
             Ruta ruta = rutaOp.recuperarPorId(Conexion.obtener(), Integer.parseInt(model.getValueAt(sel, 0).toString()));
-            ModificarRuta modruta = new ModificarRuta(this,true);
+            ModificarRuta modruta = new ModificarRuta(this, true);
             modruta.asignarRuta(ruta);
             modruta.setVisible(true);
             limpiar();
-        }
-        else{
+        } else {
             JOptionPane.showMessageDialog(null, "Selecciona una fila.");
-        } 
+        }
     }
 
     /**
@@ -185,6 +182,7 @@ public class FormRuta extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButtonRegresar = new javax.swing.JButton();
+        jButtonRecargar = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuPerfil = new javax.swing.JMenuItem();
@@ -205,10 +203,20 @@ public class FormRuta extends javax.swing.JFrame {
         jLabelBusqId.setText("Búsqueda por id: ");
 
         jButtonBusqId.setText("Buscar");
+        jButtonBusqId.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBusqIdActionPerformed(evt);
+            }
+        });
 
         jLabelBusqAlias.setText("Búsqueda por alias:");
 
         jButtonBusqAlias.setText("Buscar");
+        jButtonBusqAlias.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBusqAliasActionPerformed(evt);
+            }
+        });
 
         jLabelListRutas.setText("Lista de rutas");
 
@@ -271,6 +279,16 @@ public class FormRuta extends javax.swing.JFrame {
             }
         });
 
+        jButtonRecargar.setBackground(new java.awt.Color(110, 141, 136));
+        jButtonRecargar.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+        jButtonRecargar.setForeground(new java.awt.Color(254, 254, 254));
+        jButtonRecargar.setText("Recargar");
+        jButtonRecargar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRecargarActionPerformed(evt);
+            }
+        });
+
         jMenu1.setText("Opciones");
 
         jMenuPerfil.setText("Perfil");
@@ -319,22 +337,18 @@ public class FormRuta extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(200, 200, 200)
+                .addGap(130, 130, 130)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32)
+                .addGap(26, 26, 26)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
+                .addGap(30, 30, 30)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
+                .addComponent(jButtonRecargar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addComponent(jLabelTitulo))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabelListRutas))
-                    .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 832, Short.MAX_VALUE)
@@ -350,7 +364,16 @@ public class FormRuta extends javax.swing.JFrame {
                                 .addComponent(jTextFieldBusqAlias, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButtonBusqAlias))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(12, 12, 12)
+                                .addComponent(jLabelTitulo))
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabelListRutas)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButtonRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -374,9 +397,10 @@ public class FormRuta extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 358, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonRecargar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addComponent(jButtonRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -412,12 +436,73 @@ public class FormRuta extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void limpiar(){
-        int a = model.getRowCount()-1;
-        for (int i = a; i >= 0; i--) {          
+    private void limpiar() {
+        int a = model.getRowCount() - 1;
+        for (int i = a; i >= 0; i--) {
             model.removeRow(i);
         }
         cargarDatos();
+    }
+
+    private void soloLimpia() {
+        int a = model.getRowCount() - 1;
+        for (int i = a; i >= 0; i--) {
+            model.removeRow(i);
+        }
+    }
+
+    private void busquedaPorId() {
+        if (!"".equals(jTextFieldBusqId.getText())) {
+            Ruta ruta = null;
+            try {
+                ruta = rutaOp.recuperarPorId(Conexion.obtener(), Integer.parseInt(jTextFieldBusqId.getText()));
+                if (ruta.getIdruta() != null) {
+                    soloLimpia();
+                    JCheckBox check = new JCheckBox();
+                    model.addRow(new Object[]{
+                        ruta.getIdruta(), ruta.getAlias(), ruta.getCosto(), ruta.getDisponibilidad(), ruta.getDescrip(), ruta.getTiempo(), ruta.getFechacreacion(), ruta.getFechamod()
+                    });
+                    //Agregamos el JCheckBox utilizando CellEditor y la clase CellRenderer creado más abajo
+                    jTb.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(check));
+                    jTb.getColumnModel().getColumn(3).setCellRenderer(new Render_CheckBox());
+                } else {
+                    JOptionPane.showMessageDialog(null, "No se encontró el id");
+                    limpiar();
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Ocurrio un error: " + e);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Debe ingresar un id");
+        }
+    }
+
+    private void busquedaPorAlias() {
+        if (!"".equals(jTextFieldBusqAlias.getText())) {
+            List<Ruta> rutas;
+            try {
+                rutas = rutaOp.recuperarVariasPorAlias(Conexion.obtener(), jTextFieldBusqAlias.getText());
+                if (!rutas.isEmpty()) {
+                    soloLimpia();
+                    JCheckBox check = new JCheckBox();
+                    for (Ruta ruta : rutas) {
+                        model.addRow(new Object[]{
+                            ruta.getIdruta(), ruta.getAlias(), ruta.getCosto(), ruta.getDisponibilidad(), ruta.getDescrip(), ruta.getTiempo(), ruta.getFechacreacion(), ruta.getFechamod()
+                        });
+                    }
+                    //Agregamos el JCheckBox utilizando CellEditor y la clase CellRenderer creado más abajo
+                    jTb.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(check));
+                    jTb.getColumnModel().getColumn(3).setCellRenderer(new Render_CheckBox());
+                } else {
+                    JOptionPane.showMessageDialog(null, "No se encontraron coincidencias");
+                    limpiar();
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Ocurrio un error: " + e);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Debe ingresar un alias a buscar");
+        }
     }
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         new NuevaRuta(this, true).setVisible(true);
@@ -430,6 +515,20 @@ public class FormRuta extends javax.swing.JFrame {
         logistica.setLocationRelativeTo(null);
         dispose();
     }//GEN-LAST:event_jButtonRegresarActionPerformed
+
+    private void jButtonBusqIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBusqIdActionPerformed
+        busquedaPorId();
+    }//GEN-LAST:event_jButtonBusqIdActionPerformed
+
+    private void jButtonRecargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRecargarActionPerformed
+        limpiar();
+        jTextFieldBusqAlias.setText("");
+        jTextFieldBusqId.setText("");
+    }//GEN-LAST:event_jButtonRecargarActionPerformed
+
+    private void jButtonBusqAliasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBusqAliasActionPerformed
+        busquedaPorAlias();
+    }//GEN-LAST:event_jButtonBusqAliasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -474,6 +573,7 @@ public class FormRuta extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButtonBusqAlias;
     private javax.swing.JButton jButtonBusqId;
+    private javax.swing.JButton jButtonRecargar;
     private javax.swing.JButton jButtonRegresar;
     private javax.swing.JLabel jLabelBusqAlias;
     private javax.swing.JLabel jLabelBusqId;
