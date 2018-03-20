@@ -54,17 +54,36 @@ public class RutaOperaciones {
 
     public Ruta recuperarPorId(Connection conexion, int idruta) throws SQLException {
         Ruta ruta = null;
+        boolean verificar = true;
         try {
             PreparedStatement consulta = conexion.prepareStatement("SELECT idruta, alias, costo, disponibilidad, descrip, tiempo, fechacreacion, fechamod FROM ruta WHERE idruta = ?;");
             consulta.setInt(1, idruta);
             ResultSet resultado = consulta.executeQuery();
             while (resultado.next()) {
                 ruta = new Ruta(idruta, resultado.getString("alias"), resultado.getDouble("costo"), resultado.getBoolean("disponibilidad"), resultado.getString("descrip"), resultado.getTime("tiempo"), resultado.getTimestamp("fechacreacion"), resultado.getTimestamp("fechamod"));
+                verificar = false;
             }
         } catch (Exception e) {
             throw new SQLDataException(e);
         }
+        if(verificar){
+            ruta = new Ruta();
+        }
         return ruta;
+    }
+    
+    public List<Ruta> recuperarVariasPorAlias(Connection conexion, String alias) throws SQLException {
+        List<Ruta> rutas = new ArrayList<>();
+        try {
+            PreparedStatement consulta = conexion.prepareStatement("SELECT idruta, alias, costo, disponibilidad, descrip, tiempo, fechacreacion, fechamod FROM ruta WHERE alias like('%"+alias+"%');");
+            ResultSet resultado = consulta.executeQuery();
+            while(resultado.next()){
+                rutas.add(new Ruta(resultado.getInt("idruta"), resultado.getString("alias"), resultado.getDouble("costo"), resultado.getBoolean("disponibilidad"), resultado.getString("descrip"), resultado.getTime("tiempo"), resultado.getTimestamp("fechacreacion"), resultado.getTimestamp("fechamod")));
+            }
+        } catch (Exception e) {
+            throw new SQLDataException(e);
+        }
+        return rutas;
     }
     
     public void eliminar(Connection conexion, int idruta) throws SQLException{
@@ -101,11 +120,14 @@ public class RutaOperaciones {
         */
         //Ruta ruta = rutaOp.recuperarPorId(Conexion.obtener(), 1);
         //System.out.println(ruta.toString());
+        /*
         System.out.println("Consulta de todas las rutas");
         List<Ruta> rutas = rutaOp.recuperarTodas(Conexion.obtener());
         for (Ruta ruta1 : rutas) {
             System.out.println(ruta1.toString());
         }
         //rutaOp.eliminar(Conexion.obtener(), 2);
+        */
+        //rutaOp.recuperarVariasPorAlias(Conexion.obtener(), "ruta");
     } 
 }
