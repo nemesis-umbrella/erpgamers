@@ -10,6 +10,7 @@ import javax.swing.ImageIcon;
 import recursos.Colores;
 import recursos.Fuente;
 import recursos.Imagenes;
+import menuprincipal.MenuPrincipal;
 
 /**
  *
@@ -89,6 +90,11 @@ public class Logistica extends javax.swing.JFrame {
         jButtonRegresar.setBackground(new java.awt.Color(38, 121, 49));
         jButtonRegresar.setForeground(new java.awt.Color(254, 254, 254));
         jButtonRegresar.setText("Regresar");
+        jButtonRegresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRegresarActionPerformed(evt);
+            }
+        });
 
         jLabelRutas.setText("Rutas");
 
@@ -172,6 +178,13 @@ public class Logistica extends javax.swing.JFrame {
         ruta.setLocationRelativeTo(null);
         dispose();
     }//GEN-LAST:event_jButtonRutaActionPerformed
+
+    private void jButtonRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRegresarActionPerformed
+        MenuPrincipal menu = new MenuPrincipal();
+        menu.setVisible(true);
+        menu.setLocationRelativeTo(null);
+        dispose();
+    }//GEN-LAST:event_jButtonRegresarActionPerformed
 
     /**
      * @param args the command line arguments
