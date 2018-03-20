@@ -37,7 +37,7 @@ public class ModificarRuta extends java.awt.Dialog {
         
         //Configuración del tiempo 
         ArrayList<String> paraHoras = new ArrayList();
-        for (int i = 0; i <= 12; i++) {
+        for (int i = 0; i < 24; i++) {
             if(i<=9){
                 paraHoras.add("0"+i);
             }
