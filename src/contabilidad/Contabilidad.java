@@ -70,7 +70,7 @@ public class Contabilidad extends javax.swing.JFrame {
         jLabelUsuario.setText("Usuario");
         getContentPane().add(jLabelUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, -1, -1));
 
-        jLabelPassword.setText("jLabel3");
+        jLabelPassword.setText("Contraseña");
         getContentPane().add(jLabelPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 240, -1, -1));
         getContentPane().add(jTextUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, 330, -1));
         getContentPane().add(jPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 270, 330, -1));
