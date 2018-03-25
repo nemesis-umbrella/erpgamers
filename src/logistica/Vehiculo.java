@@ -13,7 +13,6 @@ import java.sql.Timestamp;
  */
 public class Vehiculo {
     private final String matveh;
-    
     private Integer matemp;
     private String marca;
     private Integer aniofab;
@@ -92,5 +91,9 @@ public class Vehiculo {
     public void setFechamod(Timestamp fechamod) {
         this.fechamod = fechamod;
     }
-    
+    @Override 
+    public String toString(){
+        String vehiculo = "Vehiculo {matveh= "+this.matveh+", matemp= "+this.matemp+", marca= "+this.marca+", aniofab= "+this.aniofab+", disponibilidad= "+this.disponibilidad+", fechacreacion= "+this.fechacreacion+", fechamod= "+this.fechamod+"}";
+        return vehiculo;
+    }
 }
