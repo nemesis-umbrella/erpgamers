@@ -39,7 +39,7 @@ create table sucursal(
     fechamod		datetime
 );
 create table empleado(
-	matemp			numeric(10) primary key not null,
+	matemp			int primary key not null,
     nosuc			int not null,
     login			varchar(50) not null,
     puesto			varchar(50) not null,
@@ -104,10 +104,10 @@ create table contiene(
 );
 create table vehiculo(
 	matveh			varchar(7) primary key not null,
-    matemp			numeric(10) not null,
+    matemp			int not null,
     marca			varchar(10) not null,
     aniofab			int not null,
-    diponibilidad	bool not null,
+    disponibilidad	bool not null,
     fechacreacion	datetime,
     fechamod		datetime,
     foreign key(matemp) references empleado(matemp) 
@@ -151,7 +151,7 @@ create table agenda(
 alter table agenda auto_increment = 10000;
 create table nomina(
 	rfc				varchar(13) primary key not null,
-    matemp			numeric(10) not null,
+    matemp			int not null,
     tipocontrato	varchar(50) not null,
     tipojornada		varchar(50) not null,
     fechacreacion	datetime,
@@ -212,7 +212,6 @@ ELSE
 END IF;
 END
 $$
-call igmdiniciosesion('nemesis-umbrella','Ab123456','Jorge Luis','Mondragón','Zarate','M','nemesis_umbrella@outlook.com',1,false,false);
 drop procedure if exists verificariniciosesion;
 delimiter $$
 create procedure verificariniciosesion(
@@ -242,6 +241,8 @@ else
 end if;
 end;
 $$
-call verificariniciosesion('nemesis-umbrella','Ab123456');
-INSERT INTO `gamers`.`ruta` (`idruta`,`alias`, `costo`, `disponibilidad`, `descrip`, `tiempo`, `fechacreacion`, `fechamod`)
-VALUES(null,'Ruta 58',500.50,false,'Ruta poco fiable','01:20:55',now(),null);
+call igmdiniciosesion('nemesis-umbrella','Ab123456','Jorge Luis','Mondragón','Zarate','M','nemesis_umbrella@outlook.com',1,false,false);
+call igmdiniciosesion('jill-valentine','Ab123456','Jill','Valentine','','F','jillvalentine@stars.org',1,false,false);
+INSERT INTO `gamers`.`ruta` (`idruta`,`alias`, `costo`, `disponibilidad`, `descrip`, `tiempo`, `fechacreacion`, `fechamod`) VALUES(null,'Ruta 58',500.50,false,'Ruta poco fiable','01:20:55',now(),null);
+INSERT INTO sucursal(nombresuc,direccion,ciudad,codpost,telefono,fax,email,fechacreacion) VALUES('Las lomas','Calle Del Prado #23','Ciudad de México',08962,5589601245,5589601145,'laslomas@gamers.vg',now());
+INSERT INTO empleado (matemp,nosuc,login,puesto,departamento,fechacreacion) VALUES(201420484,1,'nemesis-umbrella','Director General','Desarrollo y Tecnología',now());
