@@ -7,6 +7,7 @@ package logistica;
 
 
 import conexion.Conexion;
+import java.awt.event.KeyEvent;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.Instant;
@@ -31,7 +32,7 @@ public class ModificarRuta extends java.awt.Dialog {
 
     private void cargarConf(){
         //Cofiguración de la ventana
-        setTitle("Agregar ruta");
+        setTitle("Modificar ruta");
         setIconImage(new ImageIcon(getClass().getResource("/Images/icono.png")).getImage());
         setLocationRelativeTo(null);
         
@@ -144,13 +145,42 @@ public class ModificarRuta extends java.awt.Dialog {
 
         jLabel2.setText("Alias:");
 
+        jTextFieldAlias.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextFieldAliasKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextFieldAliasKeyTyped(evt);
+            }
+        });
+
         jLabel3.setText("Costo:");
+
+        jTextFieldCosto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextFieldCostoKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextFieldCostoKeyTyped(evt);
+            }
+        });
 
         jLabel4.setText("Disponibilidad:");
 
         jCheckBoxDispon.setText("Disponible");
+        jCheckBoxDispon.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jCheckBoxDisponKeyPressed(evt);
+            }
+        });
 
         jLabel5.setText("Descripción:");
+
+        jTextFieldDescripcion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextFieldDescripcionKeyTyped(evt);
+            }
+        });
 
         jLabel6.setText("Tiempo:");
 
@@ -276,6 +306,47 @@ public class ModificarRuta extends java.awt.Dialog {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         guardar();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTextFieldCostoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldCostoKeyTyped
+        char car = evt.getKeyChar();
+        if((car<'0' || car>'9') && (car<'.' || car>'.')) evt.consume();
+        int pValor = 12;
+        if (jTextFieldCosto.getText().length()>=pValor){
+            evt.consume();
+        }
+    }//GEN-LAST:event_jTextFieldCostoKeyTyped
+
+    private void jTextFieldAliasKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldAliasKeyTyped
+        int pValor = 50;
+        if (jTextFieldAlias.getText().length()>=pValor){
+            evt.consume();
+        }
+    }//GEN-LAST:event_jTextFieldAliasKeyTyped
+
+    private void jTextFieldDescripcionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldDescripcionKeyTyped
+        int pValor = 100;
+        if (jTextFieldDescripcion.getText().length()>=pValor){
+            evt.consume();
+        }
+    }//GEN-LAST:event_jTextFieldDescripcionKeyTyped
+
+    private void jTextFieldAliasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldAliasKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jTextFieldCosto.requestFocus();
+        }
+    }//GEN-LAST:event_jTextFieldAliasKeyPressed
+
+    private void jTextFieldCostoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldCostoKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jCheckBoxDispon.requestFocus();
+        }
+    }//GEN-LAST:event_jTextFieldCostoKeyPressed
+
+    private void jCheckBoxDisponKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jCheckBoxDisponKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jTextFieldDescripcion.requestFocus();
+        }
+    }//GEN-LAST:event_jCheckBoxDisponKeyPressed
 
     public void guardar(){
         if(!"".equals(jTextFieldAlias.getText())){
