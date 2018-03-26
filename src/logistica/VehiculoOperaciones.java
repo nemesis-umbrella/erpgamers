@@ -87,6 +87,20 @@ public class VehiculoOperaciones {
         return vehiculos;
     }
     
+    public List<Vehiculo> recuperarVariasPorBusGen(Connection conexion, String buscar) throws SQLException {
+        List<Vehiculo> vehiculos = new ArrayList<>();
+        try {
+            PreparedStatement consulta = conexion.prepareStatement("SELECT matveh, matemp, marca, aniofab, disponibilidad, fechacreacion, fechamod FROM vehiculo WHERE CONCAT(matveh,' ',matemp,' ',marca,' ',aniofab) like('%"+buscar+"%');");
+            ResultSet resultado = consulta.executeQuery();
+            while(resultado.next()){
+                vehiculos.add(new Vehiculo(resultado.getString("matveh"), resultado.getInt("matemp"), resultado.getString("marca"), resultado.getInt("aniofab"), resultado.getBoolean("disponibilidad"), resultado.getTimestamp("fechacreacion"), resultado.getTimestamp("fechamod")));
+            }
+        } catch (Exception e) {
+            throw new SQLDataException(e);
+        }
+        return vehiculos;
+    }
+    
     public void eliminar(Connection conexion, String matveh) throws SQLException{
         try {
             PreparedStatement consulta = conexion.prepareStatement("DELETE FROM "+this.tabla+" WHERE matveh = ?;");
@@ -144,7 +158,15 @@ public class VehiculoOperaciones {
                 System.out.println(vehiculo.toString());
             }
             */
-            
+            //Ejemplo de busqueda general
+            /*
+            List<Vehiculo> vehiculos;
+            String buscar = "Ford"; 
+            vehiculos = vehop.recuperarVariasPorBusGen(Conexion.obtener(),buscar);
+            for (Vehiculo vehiculo : vehiculos) {
+                System.out.println(vehiculo.toString());
+            }
+            */
         } catch (Exception e) {
             System.out.println("Error: "+e);
         }
