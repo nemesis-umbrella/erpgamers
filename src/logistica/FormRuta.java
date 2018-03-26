@@ -39,7 +39,7 @@ public class FormRuta extends javax.swing.JFrame {
 
     public void cargarConf() {
         //Cofiguración de la ventana
-        setTitle("Menú principal");
+        setTitle("Ruta");
         setIconImage(new ImageIcon(getClass().getResource("/Images/icono.png")).getImage());
         getContentPane().setBackground(Colores.colorAzul());
 
