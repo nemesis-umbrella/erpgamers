@@ -241,8 +241,10 @@ else
 end if;
 end;
 $$
-call igmdiniciosesion('nemesis-umbrella','Ab123456','Jorge Luis','Mondragón','Zarate','M','nemesis_umbrella@outlook.com',1,false,false);
-call igmdiniciosesion('jill-valentine','Ab123456','Jill','Valentine','','F','jillvalentine@stars.org',1,false,false);
+CALL igmdiniciosesion('nemesis-umbrella','Ab123456','Jorge Luis','Mondragón','Zarate','M','nemesis_umbrella@outlook.com',1,false,false);
+CALL igmdiniciosesion('jill-valentine','Ab123456','Jill','Valentine','','F','jillvalentine@stars.org',1,false,false);
 INSERT INTO `gamers`.`ruta` (`idruta`,`alias`, `costo`, `disponibilidad`, `descrip`, `tiempo`, `fechacreacion`, `fechamod`) VALUES(null,'Ruta 58',500.50,false,'Ruta poco fiable','01:20:55',now(),null);
 INSERT INTO sucursal(nombresuc,direccion,ciudad,codpost,telefono,fax,email,fechacreacion) VALUES('Las lomas','Calle Del Prado #23','Ciudad de México',08962,5589601245,5589601145,'laslomas@gamers.vg',now());
-INSERT INTO empleado (matemp,nosuc,login,puesto,departamento,fechacreacion) VALUES(201420484,1,'nemesis-umbrella','Director General','Desarrollo y Tecnología',now());
+INSERT INTO empleado (matemp,nosuc,login,puesto,departamento,fechacreacion) VALUES
+(201420484,1,'nemesis-umbrella','Director General','Desarrollo y Tecnología',now()),
+(201620512,1,'jill-valentine','Director de ventas','Ventas',now());
