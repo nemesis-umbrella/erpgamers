@@ -56,11 +56,10 @@ public class EmpleadoOperaciones {
     }
     
     //Método encargado de encontrar varias por nombre
-    public List<Empleado> recuperarVariasPorNombre(Connection conexion, int matemp) throws SQLException {
+    public List<Empleado> recuperarVariasPorBusqueda(Connection conexion, String buscar) throws SQLException {
         List<Empleado> empleados = new ArrayList<>();
         try {
-            PreparedStatement consulta = conexion.prepareStatement("SELECT e.matemp, i.login, CONCAT(i.nombre,' ',i.apellidop,' ',i.apellidom) As 'nombrecompleto', i.email FROM empleado e INNER JOIN iniciosesion i ON e.login = i.login WHERE matemp = ?;");
-            consulta.setInt(1, matemp);
+            PreparedStatement consulta = conexion.prepareStatement("SELECT e.matemp, i.login, CONCAT(i.nombre,' ',i.apellidop,' ',i.apellidom) As 'nombrecompleto', i.email FROM empleado e INNER JOIN iniciosesion i ON e.login = i.login WHERE CONCAT(i.login,' ',i.nombre,' ',i.apellidop,' ',i.apellidom,' ',i.email) like('%"+buscar+"%');");
             ResultSet resultado = consulta.executeQuery();
             while(resultado.next()){
                 empleados.add(new Empleado(resultado.getInt("matemp"), resultado.getString("login"), resultado.getString("nombrecompleto"), resultado.getString("email")));
@@ -87,6 +86,15 @@ public class EmpleadoOperaciones {
             Empleado empleado;
             empleado = empop.recuperarPorMatEmp(Conexion.obtener(), 201420485);
             System.out.println(empleado.toString());
+            */
+            //Ejemplo de búsqueda general, se puede ingresar nombre, apellido, usuario o correo electrónico
+            /*
+            List<Empleado> empleados;
+            String buscar = "jill";
+            empleados = empop.recuperarVariasPorBusqueda(Conexion.obtener(), buscar);
+            for (Empleado empleado : empleados) {
+                System.out.println(empleado.toString());
+            }
             */
         } catch (Exception e) {
             System.out.println("Error: "+e);
