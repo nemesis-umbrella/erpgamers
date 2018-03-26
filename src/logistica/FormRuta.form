@@ -197,6 +197,10 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jTextFieldBusqId">
+      <Events>
+        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTextFieldBusqIdKeyPressed"/>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTextFieldBusqIdKeyTyped"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jButtonBusqId">
       <Properties>
@@ -212,6 +216,10 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jTextFieldBusqAlias">
+      <Events>
+        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTextFieldBusqAliasKeyPressed"/>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTextFieldBusqAliasKeyTyped"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jButtonBusqAlias">
       <Properties>

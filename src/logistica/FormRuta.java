@@ -7,15 +7,19 @@ package logistica;
 
 import conexion.Conexion;
 import java.awt.Color;
+import java.awt.event.KeyEvent;
 import java.sql.SQLException;
+import java.text.NumberFormat;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.input.KeyCode;
 import javax.swing.DefaultCellEditor;
 import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.NumberFormatter;
 import recursos.Colores;
 import recursos.Fuente;
 
@@ -65,6 +69,7 @@ public class FormRuta extends javax.swing.JFrame {
         jTextFieldBusqId.setFont(Fuente.fuenteTexto12());
         jTextFieldBusqId.setForeground(Color.BLUE);
         jTextFieldBusqId.setBackground(Colores.colorBlancoOsc());
+        
 
         jButtonBusqId.setFont(Fuente.fuenteTexto14());
         jButtonBusqId.setBackground(Color.WHITE);
@@ -207,6 +212,15 @@ public class FormRuta extends javax.swing.JFrame {
 
         jLabelBusqId.setText("Búsqueda por id: ");
 
+        jTextFieldBusqId.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextFieldBusqIdKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextFieldBusqIdKeyTyped(evt);
+            }
+        });
+
         jButtonBusqId.setText("Buscar");
         jButtonBusqId.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -215,6 +229,15 @@ public class FormRuta extends javax.swing.JFrame {
         });
 
         jLabelBusqAlias.setText("Búsqueda por alias:");
+
+        jTextFieldBusqAlias.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextFieldBusqAliasKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextFieldBusqAliasKeyTyped(evt);
+            }
+        });
 
         jButtonBusqAlias.setText("Buscar");
         jButtonBusqAlias.addActionListener(new java.awt.event.ActionListener() {
@@ -540,6 +563,34 @@ public class FormRuta extends javax.swing.JFrame {
     private void jButtonBusqAliasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBusqAliasActionPerformed
         busquedaPorAlias();
     }//GEN-LAST:event_jButtonBusqAliasActionPerformed
+
+    private void jTextFieldBusqIdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldBusqIdKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            busquedaPorId();
+        }
+    }//GEN-LAST:event_jTextFieldBusqIdKeyPressed
+
+    private void jTextFieldBusqAliasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldBusqAliasKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            busquedaPorAlias();
+        }
+    }//GEN-LAST:event_jTextFieldBusqAliasKeyPressed
+
+    private void jTextFieldBusqIdKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldBusqIdKeyTyped
+        char car = evt.getKeyChar();
+        if((car<'0' || car>'9')) evt.consume();
+        int pValor = 10;
+        if (jTextFieldBusqId.getText().length()>=pValor){
+            evt.consume();
+        }
+    }//GEN-LAST:event_jTextFieldBusqIdKeyTyped
+
+    private void jTextFieldBusqAliasKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldBusqAliasKeyTyped
+        int pValor = 50;
+        if (jTextFieldBusqAlias.getText().length()>=pValor){
+            evt.consume();
+        }
+    }//GEN-LAST:event_jTextFieldBusqAliasKeyTyped
 
     /**
      * @param args the command line arguments
