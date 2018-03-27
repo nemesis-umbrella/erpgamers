@@ -5,11 +5,19 @@
  */
 package logistica;
 
+import conexion.Conexion;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.time.Instant;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Jorge L. Mondragón <nemesis_umbrella@outlook.com>
  */
 public class NuevoVehiculo extends javax.swing.JDialog {
+
+    private static int matriculaemp = 0;
 
     /**
      * Creates new form NuevoVehiculo
@@ -20,10 +28,53 @@ public class NuevoVehiculo extends javax.swing.JDialog {
         cargarConf();
     }
 
-    private void cargarConf(){
+    private void cargarConf() {
         setTitle("Agregar vehiculo");
         setLocationRelativeTo(null);
+        setResizable(false);
     }
+
+    public static void setMatriculaemp(int matriculaemp1) {
+        matriculaemp = matriculaemp1;
+    }
+
+    //Método para guardar los vehiculos
+    public void guardar() {
+        if (!"".equals(jTextFieldMatVeh.getText())) {
+            if (!"".equals(jTextFieldMatEmp.getText())) {
+                if (!"".equals(jTextFieldMarca.getText())) {
+                    if (!"".equals(jTextFieldAnioFab.getText())) {
+                        try {
+                            String matveh = jTextFieldMatVeh.getText().toUpperCase();
+                            int matemp = Integer.parseInt(jTextFieldMatEmp.getText());
+                            String marca = jTextFieldMarca.getText();
+                            int anioFab = Integer.parseInt(jTextFieldAnioFab.getText());
+                            boolean disponible = false;
+                            if (jCheckBoxDisp.isSelected() == true) {
+                                disponible = true;
+                            }
+                            Vehiculo vehiculo = new Vehiculo(matveh, matemp, marca, anioFab, disponible, null, null);
+                            VehiculoOperaciones vehop = new VehiculoOperaciones();
+                            vehop.guardar(Conexion.obtener(), vehiculo);
+                            setVisible(false);
+                            dispose();
+                        } catch (Exception e) {
+                            JOptionPane.showMessageDialog(null, "Hubo un error: " + e);
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Falta ingresar el año de de fab del carro");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Falta ingresar la marca");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Falta ingresar la matricula del empleado");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Falta ingresar la matricula del vehiculo");
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -34,40 +85,73 @@ public class NuevoVehiculo extends javax.swing.JDialog {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        jTextFieldMatVeh = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        jTextFieldMatEmp = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        jTextFieldMarca = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
+        jTextFieldAnioFab = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jCheckBox1 = new javax.swing.JCheckBox();
+        jCheckBoxDisp = new javax.swing.JCheckBox();
         jButton4 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         jLabel1.setText("Mat. Vehiculo:");
 
+        jTextFieldMatVeh.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextFieldMatVehKeyTyped(evt);
+            }
+        });
+
         jLabel2.setText("Mat. Empleado: ");
 
+        jTextFieldMatEmp.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextFieldMatEmpKeyTyped(evt);
+            }
+        });
+
         jButton1.setText("...");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("Marca: ");
 
+        jTextFieldMarca.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextFieldMarcaKeyTyped(evt);
+            }
+        });
+
         jLabel4.setText("Año de Fab.:");
 
-        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+        jTextFieldAnioFab.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField4ActionPerformed(evt);
+                jTextFieldAnioFabActionPerformed(evt);
+            }
+        });
+        jTextFieldAnioFab.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextFieldAnioFabKeyTyped(evt);
             }
         });
 
         jLabel5.setText("Disponibilidad:");
 
-        jCheckBox1.setText("Disponible");
+        jCheckBoxDisp.setText("Disponible");
 
         jButton4.setBackground(new java.awt.Color(0, 177, 50));
         jButton4.setForeground(new java.awt.Color(254, 254, 254));
@@ -100,8 +184,8 @@ public class NuevoVehiculo extends javax.swing.JDialog {
                             .addComponent(jLabel5))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jCheckBox1)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 427, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jCheckBoxDisp)
+                            .addComponent(jTextFieldAnioFab, javax.swing.GroupLayout.PREFERRED_SIZE, 427, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -115,11 +199,11 @@ public class NuevoVehiculo extends javax.swing.JDialog {
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 431, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jTextFieldMatEmp, javax.swing.GroupLayout.PREFERRED_SIZE, 431, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 431, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 431, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(jTextFieldMatVeh, javax.swing.GroupLayout.PREFERRED_SIZE, 431, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTextFieldMarca, javax.swing.GroupLayout.PREFERRED_SIZE, 431, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(22, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -128,46 +212,96 @@ public class NuevoVehiculo extends javax.swing.JDialog {
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldMatVeh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldMatEmp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldMarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldAnioFab, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jCheckBox1))
+                    .addComponent(jCheckBoxDisp))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton4)
                     .addComponent(jButton2))
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        //guardar();
+        matriculaemp = 0;
+        guardar();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        matriculaemp = 0;
         setVisible(false);
         dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+    private void jTextFieldAnioFabActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldAnioFabActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField4ActionPerformed
+    }//GEN-LAST:event_jTextFieldAnioFabActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        new DialogEmpleado(new javax.swing.JFrame(), true).setVisible(true);
+        if (matriculaemp != 0) {
+            jTextFieldMatEmp.setText("" + matriculaemp);
+        }
+        //limpiar();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        matriculaemp = 0;
+    }//GEN-LAST:event_formWindowClosed
+
+    private void jTextFieldMatVehKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldMatVehKeyTyped
+        int pValor = 7;
+        if (jTextFieldMatVeh.getText().length() >= pValor) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_jTextFieldMatVehKeyTyped
+
+    private void jTextFieldMatEmpKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldMatEmpKeyTyped
+        char car = evt.getKeyChar();
+        if ((car < '0' || car > '9')) {
+            evt.consume();
+        }
+        int pValor = 10;
+        if (jTextFieldMatEmp.getText().length() >= pValor) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_jTextFieldMatEmpKeyTyped
+
+    private void jTextFieldMarcaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldMarcaKeyTyped
+        int pValor = 30;
+        if (jTextFieldMarca.getText().length() >= pValor) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_jTextFieldMarcaKeyTyped
+
+    private void jTextFieldAnioFabKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldAnioFabKeyTyped
+        char car = evt.getKeyChar();
+        if ((car < '0' || car > '9')) {
+            evt.consume();
+        }
+        int pValor = 4;
+        if (jTextFieldAnioFab.getText().length() >= pValor) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_jTextFieldAnioFabKeyTyped
 
     /**
      * @param args the command line arguments
@@ -215,15 +349,15 @@ public class NuevoVehiculo extends javax.swing.JDialog {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton4;
-    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JCheckBox jCheckBoxDisp;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField jTextFieldAnioFab;
+    private javax.swing.JTextField jTextFieldMarca;
+    private javax.swing.JTextField jTextFieldMatEmp;
+    private javax.swing.JTextField jTextFieldMatVeh;
     // End of variables declaration//GEN-END:variables
 }
