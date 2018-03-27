@@ -105,7 +105,7 @@ create table contiene(
 create table vehiculo(
 	matveh			varchar(7) primary key not null,
     matemp			int not null,
-    marca			varchar(10) not null,
+    marca			varchar(30) not null,
     aniofab			int not null,
     disponibilidad	bool not null,
     fechacreacion	datetime,
