@@ -132,19 +132,29 @@ public class FormFlota extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Selecciona una fila.");
         }
     }
-
-    private void modificar() throws SQLException, ClassNotFoundException {
-        seleccion();
+    
+    private void limpiar() {
+        int a = model.getRowCount() - 1;
+        for (int i = a; i >= 0; i--) {
+            model.removeRow(i);
+        }
+        cargarDatos();
+    }
+    
+    private void modificar(){
+        try {
+            seleccion();
         if (sel >= 0) {
             Vehiculo vehiculo = vehop.recuperarPorMatVeh(Conexion.obtener(), model.getValueAt(sel, 0).toString());
-            /*
-            ModificarRuta modruta = new ModificarRuta(this, true);
-            modruta.asignarRuta(ruta);
-            modruta.setVisible(true);
-            */
-            //limpiar();
+            ModificarVehiculo modveh = new ModificarVehiculo(this, true);
+            modveh.asignarVehiculo(vehiculo);
+            modveh.setVisible(true);
+            limpiar();
         } else {
             JOptionPane.showMessageDialog(null, "Selecciona una fila.");
+        }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro: "+e);
         }
     }
     /**
@@ -381,22 +391,12 @@ public class FormFlota extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonBusqMarcActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        /*
-        new NuevaRuta(this, true).setVisible(true);
+        new NuevoVehiculo(this, true).setVisible(true);
         limpiar();
-        */
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        /*
-        try {
-            modificar();
-        } catch (SQLException ex) {
-            Logger.getLogger(FormRuta.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(FormRuta.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        */
+        modificar();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
