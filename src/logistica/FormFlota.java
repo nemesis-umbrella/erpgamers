@@ -22,7 +22,9 @@ import recursos.Fuente;
  * @author Jorge L. Mondragón <nemesis_umbrella@outlook.com>
  */
 public class FormFlota extends javax.swing.JFrame {
+
     VehiculoOperaciones vehop = new VehiculoOperaciones();
+
     /**
      * Creates new form Flota
      */
@@ -33,13 +35,13 @@ public class FormFlota extends javax.swing.JFrame {
         cargarDatos();
     }
 
-    public void cargarConf(){
-         //Cofiguración de la ventana
+    private void cargarConf() {
+        //Cofiguración de la ventana
         setTitle("Flota");
         setIconImage(new ImageIcon(getClass().getResource("/Images/icono.png")).getImage());
         getContentPane().setBackground(Colores.colorAzul());
         setLocationRelativeTo(null);
-        
+
         //Configuración del menubar
         jMenuPerfil.setIcon(new ImageIcon(getClass().getResource("/Images/menu/icon-user.png")));
         jMenuColor.setIcon(new ImageIcon(getClass().getResource("/Images/menu/fondo.png")));
@@ -55,7 +57,7 @@ public class FormFlota extends javax.swing.JFrame {
         //Título del formulario
         jLabelTitulo.setFont(Fuente.fuenteTitulos());
         jLabelTitulo.setForeground(Color.WHITE);
-        
+
         //Configuración de búsqueda general
         jLabelBusqGeneral.setFont(Fuente.fuenteTexto14());
         jLabelBusqGeneral.setForeground(Color.WHITE);
@@ -67,13 +69,13 @@ public class FormFlota extends javax.swing.JFrame {
         jButtonBusqMarc.setFont(Fuente.fuenteTexto14());
         jButtonBusqMarc.setBackground(Color.WHITE);
         jButtonBusqMarc.setForeground(Color.BLUE);
-        
+
         //Label de derechos reservados
         jLabelDerechos.setFont(Fuente.fuenteTexto14());
         jLabelDerechos.setForeground(Color.WHITE);
 
     }
-    
+
     private DefaultTableModel model;//Modelo para tabla
     private int sel = -1;//Variable para obtener fila seleccionada de tabla.
 
@@ -100,13 +102,12 @@ public class FormFlota extends javax.swing.JFrame {
             JCheckBox check = new JCheckBox();
             for (Vehiculo vehiculo : vehiculos) {
                 model.addRow(new Object[]{
-                    vehiculo.getMatveh(), vehiculo.getMatemp(), vehiculo.getMarca(), vehiculo.getAniofab(), vehiculo.getDisponibilidad(),vehiculo.getFechacreacion(),vehiculo.getFechamod()
+                    vehiculo.getMatveh(), vehiculo.getMatemp(), vehiculo.getMarca(), vehiculo.getAniofab(), vehiculo.getDisponibilidad(), vehiculo.getFechacreacion(), vehiculo.getFechamod()
                 });
             }
             //Agregamos el JCheckBox utilizando CellEditor y la clase CellRenderer creado más abajo
             jTb.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(check));
             jTb.getColumnModel().getColumn(4).setCellRenderer(new Render_CheckBox());
-            //limpiar();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ocurrio un error: " + e);
         }
@@ -121,18 +122,25 @@ public class FormFlota extends javax.swing.JFrame {
     }
 
     //Método para eliminar la fila seleccionada de la tabla.
-    private void eliminar() throws SQLException, ClassNotFoundException {
-        seleccion();
-        if (sel >= 0) {
-            vehop.eliminar(Conexion.obtener(), model.getValueAt(sel, 0).toString());
-            JOptionPane.showMessageDialog(null, "Se ha eliminado el vehiculo con la matricula: " + model.getValueAt(sel, 0));
-            model.removeRow(sel);
-            sel = -1;
-        } else {
-            JOptionPane.showMessageDialog(null, "Selecciona una fila.");
+    private void eliminar() {
+        try {
+            seleccion();
+            if (sel >= 0) {
+                int reply = JOptionPane.showConfirmDialog(null, "¿Estás seguro(a) que deseas eliminar la ruta?", "Eliminar", JOptionPane.YES_NO_OPTION);
+                if (reply == JOptionPane.YES_OPTION) {
+                    vehop.eliminar(Conexion.obtener(), model.getValueAt(sel, 0).toString());
+                    JOptionPane.showMessageDialog(null, "Se ha eliminado el vehiculo con la matricula: " + model.getValueAt(sel, 0));
+                    model.removeRow(sel);
+                    sel = -1;
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Selecciona una fila.");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error: " + e);
         }
     }
-    
+
     private void limpiar() {
         int a = model.getRowCount() - 1;
         for (int i = a; i >= 0; i--) {
@@ -140,23 +148,59 @@ public class FormFlota extends javax.swing.JFrame {
         }
         cargarDatos();
     }
-    
-    private void modificar(){
+
+    private void modificar() {
         try {
             seleccion();
-        if (sel >= 0) {
-            Vehiculo vehiculo = vehop.recuperarPorMatVeh(Conexion.obtener(), model.getValueAt(sel, 0).toString());
-            ModificarVehiculo modveh = new ModificarVehiculo(this, true);
-            modveh.asignarVehiculo(vehiculo);
-            modveh.setVisible(true);
-            limpiar();
-        } else {
-            JOptionPane.showMessageDialog(null, "Selecciona una fila.");
-        }
+            if (sel >= 0) {
+                Vehiculo vehiculo = vehop.recuperarPorMatVeh(Conexion.obtener(), model.getValueAt(sel, 0).toString());
+                ModificarVehiculo modveh = new ModificarVehiculo(this, true);
+                modveh.asignarVehiculo(vehiculo);
+                modveh.setVisible(true);
+                limpiar();
+            } else {
+                JOptionPane.showMessageDialog(null, "Selecciona una fila.");
+            }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro: "+e);
+            JOptionPane.showMessageDialog(null, "Error: " + e);
         }
     }
+
+    private void soloLimpia() {
+        int a = model.getRowCount() - 1;
+        for (int i = a; i >= 0; i--) {
+            model.removeRow(i);
+        }
+    }
+
+    private void busqueda() {
+        if (!"".equals(jTextFieldBusqMarc.getText())) {
+            List<Vehiculo> vehiculos;
+            try {
+                vehiculos = vehop.recuperarVariasPorBusGen(Conexion.obtener(), jTextFieldBusqMarc.getText());
+                if (!vehiculos.isEmpty()) {
+                    soloLimpia();
+                    JCheckBox check = new JCheckBox();
+                    for (Vehiculo vehiculo : vehiculos) {
+                        model.addRow(new Object[]{
+                            vehiculo.getMatveh(), vehiculo.getMatemp(), vehiculo.getMarca(), vehiculo.getAniofab(), vehiculo.getDisponibilidad(), vehiculo.getFechacreacion(), vehiculo.getFechamod()
+                        });
+                    }
+                    //Agregamos el JCheckBox utilizando CellEditor y la clase CellRenderer creado más abajo
+                    jTb.getColumnModel().getColumn(4).setCellEditor(new DefaultCellEditor(check));
+                    jTb.getColumnModel().getColumn(4).setCellRenderer(new Render_CheckBox());
+                } else {
+                    JOptionPane.showMessageDialog(null, "No se encontraron coincidencias");
+                    limpiar();
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Ocurrio un error: " + e);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Debe ingresar un alias a buscar");
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -387,7 +431,7 @@ public class FormFlota extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuPerfilActionPerformed
 
     private void jButtonBusqMarcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBusqMarcActionPerformed
-        //busquedaPorAlias();
+        busqueda();
     }//GEN-LAST:event_jButtonBusqMarcActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -400,26 +444,12 @@ public class FormFlota extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        /*
-        int reply = JOptionPane.showConfirmDialog(null, "¿Estás seguro(a) que deseas eliminar la ruta?", "Eliminar", JOptionPane.YES_NO_OPTION);
-        if (reply == JOptionPane.YES_OPTION) {
-            try {
-                eliminar();
-            } catch (SQLException ex) {
-                Logger.getLogger(FormRuta.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(FormRuta.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        */
+        eliminar();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButtonRecargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRecargarActionPerformed
-        /*
         limpiar();
-        jTextFieldBusqAlias.setText("");
-        jTextFieldBusqId.setText("");
-        */
+        jTextFieldBusqMarc.setText("");
     }//GEN-LAST:event_jButtonRecargarActionPerformed
 
     private void jButtonRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRegresarActionPerformed
