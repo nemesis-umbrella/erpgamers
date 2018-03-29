@@ -73,7 +73,7 @@ public class FormInicioSesion extends javax.swing.JFrame {
             if (!pass.equals("")) {
                 InicioSesionOperaciones iniop = new InicioSesionOperaciones();
                 try {
-                    int respuesta = iniop.verificarInicio(Conexion.obtener(), user, pass);
+                    int respuesta = iniop.verificarInicio(Conexion.obtener(), user.trim(), pass.trim());
                     if (respuesta > 0) {
                         iniop.cargarDatosUsuario(Conexion.obtener(), user);
                         switch (respuesta) {
@@ -110,6 +110,7 @@ public class FormInicioSesion extends javax.swing.JFrame {
                     } else {
                         JOptionPane.showMessageDialog(null, "El usuario no existe");
                         jTextUsuario.requestFocus();
+                        jTextUsuario.selectAll();
                     }
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(null, "Error: " + e);
