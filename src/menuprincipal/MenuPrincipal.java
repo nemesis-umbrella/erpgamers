@@ -5,6 +5,7 @@
  */
 package menuprincipal;
 
+import iniciosesion.Perfil;
 import java.awt.Color;
 import javax.swing.ImageIcon;
 import recursos.Colores;
@@ -51,6 +52,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         //Label de bienvenido
         jLabelBienvenido.setFont(Fuente.fuenteTitulos());
         jLabelBienvenido.setForeground(Color.WHITE);
+        jLabelBienvenido.setText("Bienvenido: "+Perfil.getNombre());
         //Label de recursos humanos
         jLabelRecHum.setFont(Fuente.fuenteTexto14());
         jLabelRecHum.setForeground(Color.WHITE);
