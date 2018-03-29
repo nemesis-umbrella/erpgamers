@@ -5,11 +5,15 @@
  */
 package iniciosesion;
 
+import conexion.Conexion;
 import java.awt.Color;
-import javax.swing.ImageIcon;
+import java.awt.event.KeyEvent;
+import javax.swing.JOptionPane;
+import menuprincipal.MenuPrincipal;
 import recursos.Imagenes;
 import recursos.Colores;
 import recursos.Fuente;
+import terminos.Licencia;
 
 /**
  *
@@ -58,6 +62,68 @@ public class FormInicioSesion extends javax.swing.JFrame {
         jLabelCopyright.setForeground(Color.WHITE);
     }
 
+    private void iniciarsesion() {
+        //Realiza la lectura de la contraseña 
+        char[] arrayC = jPassword.getPassword();
+        //Se convierte el resultado de char[] a String
+        String pass = new String(arrayC);
+        //Realiza la lectura del usuario
+        String user = jTextUsuario.getText();
+        if (!user.equals("")) {
+            if (!pass.equals("")) {
+                InicioSesionOperaciones iniop = new InicioSesionOperaciones();
+                try {
+                    int respuesta = iniop.verificarInicio(Conexion.obtener(), user, pass);
+                    if (respuesta > 0) {
+                        iniop.cargarDatosUsuario(Conexion.obtener(), user);
+                        switch (respuesta) {
+                            case 1:
+                                MenuPrincipal menu = new MenuPrincipal();
+                                menu.setVisible(true);
+                                menu.setResizable(false);
+                                menu.setLocationRelativeTo(null);
+                                dispose();
+                                break;
+                            case 2:
+                                JOptionPane.showMessageDialog(null, "Password incorrecto");
+                                jPassword.requestFocus();
+                                jPassword.selectAll();
+                                Perfil.limpiar();
+                                break;
+                            case 3:
+                                JOptionPane.showMessageDialog(null, "No puedes tener acceso al sistema, consulta al administrador");
+                                jTextUsuario.setText("");
+                                jPassword.setText("");
+                                Perfil.limpiar();
+                                break;
+                            case 4:
+                                Licencia lic = new Licencia();
+                                lic.setBounds(0, 0, 600, 360);
+                                lic.setVisible(true);
+                                lic.setResizable(false);
+                                lic.setLocationRelativeTo(null);
+                                dispose();
+                                break;
+                            default:
+                                break;
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "El usuario no existe");
+                        jTextUsuario.requestFocus();
+                    }
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Error: " + e);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Debe ingresar la contraseña");
+                jPassword.requestFocus();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Debe ingresar el usuario");
+            jTextUsuario.requestFocus();
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -79,9 +145,26 @@ public class FormInicioSesion extends javax.swing.JFrame {
 
         jLabelUsuario.setText("Usuario: ");
 
+        jTextUsuario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextUsuarioKeyPressed(evt);
+            }
+        });
+
         jLabelPassword.setText("Contraseña: ");
 
+        jPassword.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jPasswordKeyPressed(evt);
+            }
+        });
+
         jButtonInicio.setText("Iniciar sesión");
+        jButtonInicio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonInicioActionPerformed(evt);
+            }
+        });
 
         jLabelCopyright.setText("©2018 Gamers Retail ");
 
@@ -134,6 +217,22 @@ public class FormInicioSesion extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButtonInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonInicioActionPerformed
+        iniciarsesion();
+    }//GEN-LAST:event_jButtonInicioActionPerformed
+
+    private void jTextUsuarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextUsuarioKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            jPassword.requestFocus();
+        }
+    }//GEN-LAST:event_jTextUsuarioKeyPressed
+
+    private void jPasswordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPasswordKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            iniciarsesion();
+        }
+    }//GEN-LAST:event_jPasswordKeyPressed
 
     /**
      * @param args the command line arguments
