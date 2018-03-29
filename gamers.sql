@@ -220,26 +220,57 @@ IN _pass	blob)
 begin
 declare _desci varchar(50);
 declare _verificar bool default false;
+declare _terminos bool default false;
 if exists (select * from iniciosesion where login=_login) THEN
 	set _desci = (select convert(aes_decrypt(pass,'OqZ8e5-pz+*LTeHG'), char(50))  from iniciosesion where login=_login);
     if _pass = _desci then
 		set _verificar = (select activo from iniciosesion where login = _login);
         if _verificar = true then
-			-- significa que el usuario puede ingresar al sistema
-			select '1';
+			set _terminos = (select terminos from iniciosesion where login = _login);
+            if _terminos = true then
+				-- Significa que el usuario puede ingresar al sistema
+				select '1' as 'resultado';
+            else
+				-- Significa que el usuario debe aceptar los terminos
+                select '5' as 'resultado';
+            end if;
         else
             -- significa que el usuario no puede ingresar al sistema
-			select '3';
+			select '3' as 'resultado';
         end if;
 	else
         -- sinfica que el password esta erroneo
-		select '2';
+		select '2' as 'resultado';
     end if;
 else
     -- significa que el usuario no existe
-	select '0';
+	select '0' as 'resultado';
 end if;
 end;
+$$
+DROP PROCEDURE IF EXISTS cambiarpass;
+delimiter $$
+CREATE PROCEDURE cambiarpass(
+IN _login 	VARCHAR(50),
+IN _pass 	VARCHAR(50),
+IN _newpass VARCHAR(50))
+BEGIN
+DECLARE _desc VARCHAR(50);
+  IF EXISTS(SELECT * FROM iniciosesion WHERE login = _login) THEN
+	SET _desc = (select convert(aes_decrypt(pass,'OqZ8e5-pz+*LTeHG'), char(50))  from iniciosesion where login=_login);
+    IF _desc = _pass THEN
+		-- Significa que el password corresponde y es cambiado
+        update iniciosesion set pass=aes_encrypt(_newpass,'OqZ8e5-pz+*LTeHG') where login=_login;
+		SELECT 1 as 'resultado';
+	ELSE
+		-- Significa que el password no corresponde
+		SELECT 2 as 'resultado';
+	END IF;
+  ELSE
+	-- Significa que el usuario no existe
+	SELECT 0 as 'resultado';
+  END IF;
+END;
 $$
 CALL igmdiniciosesion('nemesis-umbrella','Ab123456','Jorge Luis','Mondragón','Zarate','M','nemesis_umbrella@outlook.com',1,false,false);
 CALL igmdiniciosesion('jill-valentine','Ab123456','Jill','Valentine','','F','jillvalentine@stars.org',1,false,false);
