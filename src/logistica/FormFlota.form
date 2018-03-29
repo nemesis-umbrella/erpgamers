@@ -178,6 +178,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="jTextFieldBusqMarc">
+      <Events>
+        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTextFieldBusqMarcKeyPressed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jButtonBusqMarc">
       <Properties>

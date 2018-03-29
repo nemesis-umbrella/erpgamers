@@ -7,6 +7,7 @@ package logistica;
 
 import conexion.Conexion;
 import java.awt.Color;
+import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.util.List;
 import javax.swing.DefaultCellEditor;
@@ -241,6 +242,12 @@ public class FormFlota extends javax.swing.JFrame {
 
         jLabelBusqGeneral.setText("Búsqueda general:");
 
+        jTextFieldBusqMarc.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextFieldBusqMarcKeyPressed(evt);
+            }
+        });
+
         jButtonBusqMarc.setText("Buscar");
         jButtonBusqMarc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -458,6 +465,12 @@ public class FormFlota extends javax.swing.JFrame {
         logistica.setLocationRelativeTo(null);
         dispose();
     }//GEN-LAST:event_jButtonRegresarActionPerformed
+
+    private void jTextFieldBusqMarcKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldBusqMarcKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            busqueda();
+        }
+    }//GEN-LAST:event_jTextFieldBusqMarcKeyPressed
 
     /**
      * @param args the command line arguments
