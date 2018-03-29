@@ -280,3 +280,4 @@ INSERT INTO sucursal(nombresuc,direccion,ciudad,codpost,telefono,fax,email,fecha
 INSERT INTO empleado (matemp,nosuc,login,puesto,departamento,fechacreacion) VALUES
 (201420484,1,'nemesis-umbrella','Director General','Desarrollo y Tecnología',now()),
 (201620512,1,'jill-valentine','Director de ventas','Ventas',now());
+update iniciosesion set activo = true where login = 'nemesis-umbrella';
