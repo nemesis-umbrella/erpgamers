@@ -230,9 +230,10 @@ if exists (select * from iniciosesion where login=_login) THEN
             if _terminos = true then
 				-- Significa que el usuario puede ingresar al sistema
 				select '1' as 'resultado';
+                update iniciosesion set ultimaconexion = now() where login = _login;
             else
 				-- Significa que el usuario debe aceptar los terminos
-                select '5' as 'resultado';
+                select '4' as 'resultado';
             end if;
         else
             -- significa que el usuario no puede ingresar al sistema
