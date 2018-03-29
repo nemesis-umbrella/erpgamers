@@ -248,6 +248,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="jButtonLogistica">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonLogisticaActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabelLogistica">
       <Properties>

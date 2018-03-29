@@ -10,6 +10,7 @@ import javax.swing.ImageIcon;
 import recursos.Colores;
 import recursos.Imagenes;
 import recursos.Fuente;
+import logistica.Logistica;
 /**
  *
  * @author nemesis-umbrella
@@ -134,6 +135,12 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jLabelRecHum.setText("Recursos humanos");
 
         jLabelConta.setText("Contabilidad");
+
+        jButtonLogistica.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonLogisticaActionPerformed(evt);
+            }
+        });
 
         jLabelLogistica.setText("Logística");
 
@@ -286,6 +293,14 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private void jMenuSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuSalirActionPerformed
         System.exit(0);
     }//GEN-LAST:event_jMenuSalirActionPerformed
+
+    private void jButtonLogisticaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLogisticaActionPerformed
+        Logistica logistica = new Logistica();
+        logistica.setVisible(true);
+        logistica.setResizable(false);
+        logistica.setLocationRelativeTo(null);
+        dispose();
+    }//GEN-LAST:event_jButtonLogisticaActionPerformed
 
     /**
      * @param args the command line arguments
