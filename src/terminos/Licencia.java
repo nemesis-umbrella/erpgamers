@@ -5,6 +5,7 @@
  */
 package terminos;
 
+import conexion.Conexion;
 import javax.swing.*;
 import java.awt.event.*;
 import java.awt.*;
@@ -13,6 +14,8 @@ import javax.swing.event.ChangeListener;
 import recursos.Imagenes;
 import menuprincipal.MenuPrincipal;
 import iniciosesion.FormInicioSesion;
+import iniciosesion.InicioSesionOperaciones;
+import iniciosesion.Perfil;
 /**
  *
  * @author Jorge L. Mondragón <nemesis_umbrella@outlook.com>
@@ -32,11 +35,11 @@ public class Licencia extends JFrame implements ActionListener, ChangeListener {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setTitle("Licencia de uso");
         setIconImage(new ImageIcon(getClass().getResource("/Images/icono.png")).getImage());
-        nombre = "Usuario"; //Esta línea debe contener el nombre del usuario
+        nombre = Perfil.getNombre(); //Esta línea debe contener el nombre del usuario
 
         //Label terminos y condiciones
         label1 = new JLabel("TÉRMINOS Y CONDICIONES");
-        label1.setBounds(215, 5, 200, 30);
+        label1.setBounds(215, 5, 250, 30);
         label1.setFont(new Font("Andale Mono", 1, 14));
         label1.setForeground(new Color(0, 0, 0));
         add(label1);
@@ -68,13 +71,13 @@ public class Licencia extends JFrame implements ActionListener, ChangeListener {
 
         //Se agregan los botones
         boton1 = new JButton("Continuar");
-        boton1.setBounds(10, 290, 100, 30);
+        boton1.setBounds(10, 290, 120, 30);
         boton1.addActionListener(this);
         boton1.setEnabled(false);
         add(boton1);
 
         boton2 = new JButton("No acepto");
-        boton2.setBounds(120, 290, 100, 30);
+        boton2.setBounds(135, 290, 120, 30);
         boton2.addActionListener(this);
         boton2.setEnabled(true);
         add(boton2);
@@ -107,11 +110,17 @@ public class Licencia extends JFrame implements ActionListener, ChangeListener {
     }
 
     public void cargarMenuPrincipal() {
-        MenuPrincipal princ = new MenuPrincipal();
-        princ.setVisible(true);
-        princ.setResizable(false);
-        princ.setLocationRelativeTo(null);
-        dispose();
+        InicioSesionOperaciones iniop = new InicioSesionOperaciones();
+        try {
+            iniop.aceptarTerminos(Conexion.obtener(), Perfil.getLogin());
+            MenuPrincipal princ = new MenuPrincipal();
+            princ.setVisible(true);
+            princ.setResizable(false);
+            princ.setLocationRelativeTo(null);
+            dispose();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error:" +e);
+        }
     }
 
     public void cargarInicioSesion(){
