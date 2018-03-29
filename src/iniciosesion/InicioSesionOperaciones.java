@@ -89,11 +89,11 @@ public class InicioSesionOperaciones {
     
     public void cargarDatosUsuario(Connection conexion, String login) throws SQLException {
         try {
-            PreparedStatement consulta = conexion.prepareStatement("SELECT login, nombre, email FROM iniciosesion WHERE login = ?;");
+            PreparedStatement consulta = conexion.prepareStatement("SELECT login, nombre, CONCAT(nombre,' ',apellidop,' ',apellidom) as 'nomcompleto',email, genero, ultimaconexion, tipo FROM iniciosesion WHERE login = ?;");
             consulta.setString(1, login);
             ResultSet resultado = consulta.executeQuery();
             while (resultado.next()) {
-                Perfil.pasar(resultado.getString("login"), resultado.getString("nombre"), resultado.getString("email"));
+                Perfil.pasar(resultado.getString("login"), resultado.getString("nombre"), resultado.getString("nomcompleto"), resultado.getString("email"), resultado.getString("genero"), resultado.getString("ultimaconexion"), resultado.getInt("tipo"));
             }
         } catch (Exception e) {
             throw new SQLDataException(e);
@@ -106,9 +106,10 @@ public class InicioSesionOperaciones {
             consulta.setString(1, login);
             ResultSet resultado = consulta.executeQuery();
             if (resultado.next()) {
-                consulta = conexion.prepareStatement("UPDATE iniciosesion SET terminos = ? WHERE login = ?");
+                consulta = conexion.prepareStatement("UPDATE iniciosesion SET terminos = ?, ultimaconexion = ? WHERE login = ?");
                 consulta.setBoolean(1, true);
-                consulta.setString(2, login);
+                consulta.setTimestamp(2, Timestamp.from(Instant.now()));
+                consulta.setString(3, login);
                 consulta.executeUpdate();
             }
         } catch (Exception e) {
