@@ -5,9 +5,12 @@
  */
 package menuprincipal;
 
+import iniciosesion.DialogPerfil;
+import iniciosesion.FormInicioSesion;
 import iniciosesion.Perfil;
 import java.awt.Color;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import recursos.Colores;
 import recursos.Imagenes;
 import recursos.Fuente;
@@ -89,7 +92,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jButtonNomina.setIcon(Imagenes.ajustarImagen("src/Images/menuprincipal/nomina.png", jButtonRecHum.getWidth(), jButtonRecHum.getHeight()));
         jButtonNomina.setBackground(Colores.colorBlancoOsc());
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -155,6 +158,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jMenu1.setText("Opciones");
 
         jMenuPerfil.setText("Perfil");
+        jMenuPerfil.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuPerfilActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuPerfil);
 
         jMenuColor.setText("Color de fondo");
@@ -174,6 +182,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jMenu1.add(jMenuColor);
 
         jMenuCerrarSesion.setText("Cerrar sesión");
+        jMenuCerrarSesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuCerrarSesionActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuCerrarSesion);
 
         jMenuSalir.setText("Salir");
@@ -293,7 +306,10 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuSalirActionPerformed
-        System.exit(0);
+        int reply = JOptionPane.showConfirmDialog(null, "¿Estás seguro(a) que deseas salir?", "Cerrar sesión", JOptionPane.YES_NO_OPTION);
+        if (reply == JOptionPane.YES_OPTION) {
+            System.exit(0);
+        }
     }//GEN-LAST:event_jMenuSalirActionPerformed
 
     private void jButtonLogisticaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLogisticaActionPerformed
@@ -303,6 +319,20 @@ public class MenuPrincipal extends javax.swing.JFrame {
         logistica.setLocationRelativeTo(null);
         dispose();
     }//GEN-LAST:event_jButtonLogisticaActionPerformed
+
+    private void jMenuPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuPerfilActionPerformed
+        new DialogPerfil(this, true).setVisible(true);
+    }//GEN-LAST:event_jMenuPerfilActionPerformed
+
+    private void jMenuCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuCerrarSesionActionPerformed
+        int reply = JOptionPane.showConfirmDialog(null, "¿Estás seguro(a) que deseas cerrar sesión?", "Cerrar sesión", JOptionPane.YES_NO_OPTION);
+        if (reply == JOptionPane.YES_OPTION) {
+            Perfil.limpiar();
+            FormInicioSesion inicio = new FormInicioSesion();
+            inicio.setVisible(true);
+            dispose();
+        }
+    }//GEN-LAST:event_jMenuCerrarSesionActionPerformed
 
     /**
      * @param args the command line arguments
