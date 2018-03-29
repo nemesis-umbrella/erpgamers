@@ -9,6 +9,7 @@ import conexion.Conexion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLDataException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.Instant;
@@ -84,6 +85,35 @@ public class InicioSesionOperaciones {
         } catch (Exception e) {
         }
         return tipo;
+    }
+    
+    public void cargarDatosUsuario(Connection conexion, String login) throws SQLException {
+        try {
+            PreparedStatement consulta = conexion.prepareStatement("SELECT login, nombre, email FROM iniciosesion WHERE login = ?;");
+            consulta.setString(1, login);
+            ResultSet resultado = consulta.executeQuery();
+            while (resultado.next()) {
+                Perfil.pasar(resultado.getString("login"), resultado.getString("nombre"), resultado.getString("email"));
+            }
+        } catch (Exception e) {
+            throw new SQLDataException(e);
+        }
+    }
+    
+    public void aceptarTerminos(Connection conexion, String login) throws SQLDataException{
+        try {
+            PreparedStatement consulta = conexion.prepareStatement("SELECT * FROM iniciosesion WHERE login = ?;");
+            consulta.setString(1, login);
+            ResultSet resultado = consulta.executeQuery();
+            if (resultado.next()) {
+                consulta = conexion.prepareStatement("UPDATE iniciosesion SET terminos = ? WHERE login = ?");
+                consulta.setBoolean(1, true);
+                consulta.setString(2, login);
+                consulta.executeUpdate();
+            }
+        } catch (Exception e) {
+            throw new SQLDataException(e);
+        }
     }
     
     public static void main(String[] args){
