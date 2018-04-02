@@ -13,6 +13,8 @@ import java.sql.SQLDataException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 import logistica.Vehiculo;
 
 /**
@@ -117,6 +119,20 @@ public class InicioSesionOperaciones {
         }
     }
     
+     public List<InicioSesion> recuperarTodos(Connection conexion) throws SQLException{
+        List<InicioSesion> iniciosesion = new ArrayList<>();
+        try {
+            PreparedStatement consulta = conexion.prepareStatement("SELECT login, nombre, apellidop, apellidom, genero, email, tipo, fechacreacion, fechamod, ultimaconexion, activo, terminos FROM iniciosesion;");
+            ResultSet resultado = consulta.executeQuery();
+            while(resultado.next()){
+                iniciosesion.add(new InicioSesion(resultado.getString("login"), null, resultado.getString("nombre"), resultado.getString("apellidop"), resultado.getString("apellidom"), resultado.getString("genero").charAt(0), resultado.getString("email"), resultado.getInt("tipo"), resultado.getString("fechacreacion"), resultado.getString("fechamod"), resultado.getString("ultimaconexion"), resultado.getBoolean("activo"), resultado.getBoolean("terminos")));
+            }
+        } catch (Exception e) {
+            throw new SQLException(e);
+        }
+        return iniciosesion;
+    }
+    
     public static void main(String[] args){
         InicioSesionOperaciones inicioop = new InicioSesionOperaciones();
         try {
@@ -131,8 +147,16 @@ public class InicioSesionOperaciones {
             System.out.println(resultado);
             */
             //Cambiar contraseña de un usuario
+            /*
             int resultado = inicioop.cambiarPassword(Conexion.obtener(), "ChrisRedfield", "Ab12345", "Ab123456");
             System.out.println(resultado);
+            */
+            //Consultar usuarios
+            List<InicioSesion> sesiones;
+            sesiones = inicioop.recuperarTodos(Conexion.obtener());
+            for (InicioSesion inicioSesion : sesiones) {
+                System.out.println(inicioSesion.toString());
+            }
         } catch (Exception e) {
             System.out.println("Error: "+e);
         }
