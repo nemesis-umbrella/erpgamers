@@ -15,7 +15,6 @@ import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
-import logistica.Vehiculo;
 import recursos.Colores;
 
 /**
@@ -43,7 +42,7 @@ public class InicioSesionOperaciones {
                 consulta.setBoolean(10, iniciosesion.isTerminos());
             }
             else{
-                consulta = conexion.prepareStatement("CALL igmdiniciosesion(?,?,?,?,?,?,?,?,false,false);");
+                consulta = conexion.prepareStatement("CALL igmdiniciosesion(?,?,?,?,?,?,?,?,?,false);");
                 consulta.setString(1, iniciosesion.getLogin());
                 consulta.setString(2, iniciosesion.getPass());
                 consulta.setString(3, iniciosesion.getNombre());
@@ -52,6 +51,7 @@ public class InicioSesionOperaciones {
                 consulta.setString(6, ""+iniciosesion.getGenero());
                 consulta.setString(7, iniciosesion.getEmail());
                 consulta.setInt(8, iniciosesion.getTipo());
+                consulta.setBoolean(9, iniciosesion.isActivo());
             }
             consulta.executeUpdate();
         } catch (Exception e) {
@@ -160,6 +160,50 @@ public class InicioSesionOperaciones {
         } catch (Exception e) {
             throw new SQLDataException(e);
         }
+    }
+    
+    public InicioSesion buscarPorLogin(Connection conexion, String login) throws SQLDataException{
+        InicioSesion inicio = null;
+        try {
+            PreparedStatement consulta = conexion.prepareStatement("SELECT login, nombre, apellidop, apellidom, genero, email, tipo, fechacreacion, fechamod, ultimaconexion, activo, terminos FROM iniciosesion WHERE login = ?;");
+            consulta.setString(1, login);
+            ResultSet resultado = consulta.executeQuery();
+            if (resultado.next()) {
+                inicio = new InicioSesion(resultado.getString("login"), null, resultado.getString("nombre"), resultado.getString("apellidop"), resultado.getString("apellidom"), resultado.getString("genero").charAt(0), resultado.getString("email"), resultado.getInt("tipo"), resultado.getString("fechacreacion"), resultado.getString("fechamod"), resultado.getString("ultimaconexion"), resultado.getBoolean("activo"), resultado.getBoolean("terminos"));
+            }
+        } catch (Exception e) {
+            throw new SQLDataException(e);
+        }
+        return inicio;
+    }
+    
+    public void eliminarUsuario(Connection conexion, String login) throws SQLDataException{
+        try {
+            PreparedStatement consulta = conexion.prepareStatement("SELECT login, nombre, apellidop, apellidom, genero, email, tipo, fechacreacion, fechamod, ultimaconexion, activo, terminos FROM iniciosesion WHERE login = ?;");
+            consulta.setString(1, login);
+            ResultSet resultado = consulta.executeQuery();
+            if (resultado.next()) {
+                consulta = conexion.prepareStatement("delete from iniciosesion where login = ?;");
+                consulta.setString(1, login);
+                consulta.executeUpdate();
+            }
+        } catch (Exception e) {
+            throw new SQLDataException(e);
+        }
+    }
+    
+    public List<InicioSesion> busquedaGeneral(Connection conexion, String busqueda) throws SQLException{
+        List<InicioSesion> iniciosesion = new ArrayList<>();
+        try {
+            PreparedStatement consulta = conexion.prepareStatement("SELECT login, pass, nombre, apellidop, apellidom, genero, email, tipo, fechacreacion, fechamod, ultimaconexion, activo, terminos FROM iniciosesion WHERE CONCAT(nombre,' ',apellidop,' ',apellidom,' ',email) like('%"+busqueda+"%');");
+            ResultSet resultado = consulta.executeQuery();
+            while(resultado.next()){
+                iniciosesion.add(new InicioSesion(resultado.getString("login"), null, resultado.getString("nombre"), resultado.getString("apellidop"), resultado.getString("apellidom"), resultado.getString("genero").charAt(0), resultado.getString("email"), resultado.getInt("tipo"), resultado.getString("fechacreacion"), resultado.getString("fechamod"), resultado.getString("ultimaconexion"), resultado.getBoolean("activo"), resultado.getBoolean("terminos")));
+            }
+        } catch (Exception e) {
+            throw new SQLException(e);
+        }
+        return iniciosesion;
     }
     public static void main(String[] args){
         InicioSesionOperaciones inicioop = new InicioSesionOperaciones();
