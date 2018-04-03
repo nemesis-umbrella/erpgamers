@@ -7,6 +7,7 @@ package iniciosesion;
 
 import conexion.Conexion;
 import java.awt.Color;
+import java.awt.event.KeyEvent;
 import java.util.List;
 import javax.swing.DefaultCellEditor;
 import javax.swing.ImageIcon;
@@ -59,11 +60,11 @@ public class FormUsuarios extends javax.swing.JFrame {
         jMenuNegro.setIcon(new ImageIcon(getClass().getResource("/Images/menu/colorNegro.png")));
         jMenuMorado.setIcon(new ImageIcon(getClass().getResource("/Images/menu/colorMorado.png")));
         jMenuRojo.setIcon(new ImageIcon(getClass().getResource("/Images/menu/colorRojo.png")));
-        
+
         //Label de derechos reservados
         jLabelDerechos.setFont(Fuente.fuenteTexto14());
         jLabelDerechos.setForeground(Color.WHITE);
-        
+
         //Configuración de búsqueda 
         jLabelbuscar.setFont(Fuente.fuenteTexto14());
         jLabelbuscar.setForeground(Color.WHITE);
@@ -149,10 +150,10 @@ public class FormUsuarios extends javax.swing.JFrame {
         try {
             seleccion();
             if (sel >= 0) {
-                int reply = JOptionPane.showConfirmDialog(null, "¿Estás seguro(a) que deseas eliminar la ruta?", "Eliminar", JOptionPane.YES_NO_OPTION);
+                int reply = JOptionPane.showConfirmDialog(null, "¿Estás seguro(a) que deseas eliminar el usuario?", "Eliminar", JOptionPane.YES_NO_OPTION);
                 if (reply == JOptionPane.YES_OPTION) {
-                    //vehop.eliminar(Conexion.obtener(), model.getValueAt(sel, 0).toString());
-                    JOptionPane.showMessageDialog(null, "Se ha eliminado el vehiculo con la matricula: " + model.getValueAt(sel, 0));
+                    iniop.eliminarUsuario(Conexion.obtener(), model.getValueAt(sel, 0).toString());
+                    JOptionPane.showMessageDialog(null, "Se ha eliminado el usuario: " + model.getValueAt(sel, 0));
                     model.removeRow(sel);
                     sel = -1;
                 }
@@ -176,13 +177,11 @@ public class FormUsuarios extends javax.swing.JFrame {
         try {
             seleccion();
             if (sel >= 0) {
-                /*
-                Vehiculo vehiculo = vehop.recuperarPorMatVeh(Conexion.obtener(), model.getValueAt(sel, 0).toString());
-                ModificarVehiculo modveh = new ModificarVehiculo(this, true);
-                modveh.asignarVehiculo(vehiculo);
-                modveh.setVisible(true);
+                InicioSesion inicioSesion = iniop.buscarPorLogin(Conexion.obtener(), model.getValueAt(sel, 0).toString());
+                DialogModificarUsuario moduser = new DialogModificarUsuario(this, true);
+                moduser.pasarDatos(inicioSesion);
+                moduser.setVisible(true);
                 limpiar();
-                 */
             } else {
                 JOptionPane.showMessageDialog(null, "Selecciona una fila.");
             }
@@ -195,6 +194,48 @@ public class FormUsuarios extends javax.swing.JFrame {
         int a = model.getRowCount() - 1;
         for (int i = a; i >= 0; i--) {
             model.removeRow(i);
+        }
+    }
+
+    private void busqueda() {
+        if (!"".equals(jTextFieldbuscar.getText())) {
+            List<InicioSesion> inicios;
+            try {
+                inicios = iniop.busquedaGeneral(Conexion.obtener(), jTextFieldbuscar.getText());
+                if (!inicios.isEmpty()) {
+                    soloLimpia();
+                    JCheckBox check = new JCheckBox();
+                    for (InicioSesion inicio : inicios) {
+                        String tipo = "";
+                        switch (inicio.getTipo()) {
+                            case 1:
+                                tipo = "Administrador";
+                                break;
+                            case 2:
+                                tipo = "Ventas";
+                                break;
+                            case 3:
+                                tipo = "Consultor";
+                                break;
+                            default:
+                                break;
+                        }
+                        model.addRow(new Object[]{
+                            inicio.getLogin(), inicio.getNombre(), inicio.getApellidop(), inicio.getApellidom(), inicio.getGenero(), inicio.getEmail(), tipo, inicio.getFechacreacion(), inicio.getFechamod(), inicio.getUltimaconexion(), inicio.isActivo()
+                        });
+                    }
+                    //Agregamos el JCheckBox utilizando CellEditor y la clase CellRenderer creado más abajo
+                    jTb.getColumnModel().getColumn(10).setCellEditor(new DefaultCellEditor(check));
+                    jTb.getColumnModel().getColumn(10).setCellRenderer(new Render_CheckBox());
+                } else {
+                    JOptionPane.showMessageDialog(null, "No se encontraron coincidencias");
+                    limpiar();
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Ocurrio un error: " + e);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Debe ingresar un alias a buscar");
         }
     }
 
@@ -309,7 +350,18 @@ public class FormUsuarios extends javax.swing.JFrame {
 
         jLabelbuscar.setText("Búsqueda:");
 
+        jTextFieldbuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextFieldbuscarKeyPressed(evt);
+            }
+        });
+
         jButtonbuscar.setText("Buscar");
+        jButtonbuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonbuscarActionPerformed(evt);
+            }
+        });
 
         jMenu1.setText("Opciones");
 
@@ -397,7 +449,7 @@ public class FormUsuarios extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(113, 222, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabelDerechos)
                         .addGap(86, 86, 86)
                         .addComponent(jButtonRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -422,7 +474,7 @@ public class FormUsuarios extends javax.swing.JFrame {
                                 .addComponent(jTextFieldbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 611, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jButtonbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 10, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -515,45 +567,21 @@ public class FormUsuarios extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuAcercaDeActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        /*
-        new NuevaRuta(this, true).setVisible(true);
+        new DialogAgregarUsuario(this, true).setVisible(true);
         limpiar();
-        */
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        /*
-        try {
-            modificar();
-        } catch (SQLException ex) {
-            Logger.getLogger(FormRuta.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(FormRuta.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        */
+        modificar();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        /*
-        int reply = JOptionPane.showConfirmDialog(null, "¿Estás seguro(a) que deseas eliminar la ruta?", "Eliminar", JOptionPane.YES_NO_OPTION);
-        if (reply == JOptionPane.YES_OPTION) {
-            try {
-                eliminar();
-            } catch (SQLException ex) {
-                Logger.getLogger(FormRuta.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(FormRuta.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        */
+        eliminar();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButtonRecargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRecargarActionPerformed
         limpiar();
-        /*
-        jTextFieldBusqAlias.setText("");
-        jTextFieldBusqId.setText("");
-        */
+        jTextFieldbuscar.setText("");
     }//GEN-LAST:event_jButtonRecargarActionPerformed
 
     private void jButtonRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRegresarActionPerformed
@@ -562,6 +590,16 @@ public class FormUsuarios extends javax.swing.JFrame {
         menu.setLocationRelativeTo(null);
         dispose();
     }//GEN-LAST:event_jButtonRegresarActionPerformed
+
+    private void jButtonbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonbuscarActionPerformed
+        busqueda();
+    }//GEN-LAST:event_jButtonbuscarActionPerformed
+
+    private void jTextFieldbuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldbuscarKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            busqueda();
+        }
+    }//GEN-LAST:event_jTextFieldbuscarKeyPressed
 
     /**
      * @param args the command line arguments
