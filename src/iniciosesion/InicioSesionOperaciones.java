@@ -16,6 +16,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import logistica.Vehiculo;
+import recursos.Colores;
 
 /**
  *
@@ -61,7 +62,7 @@ public class InicioSesionOperaciones {
     public int verificarInicio(Connection conexion, String login, String pass) throws SQLException{
         int tipo = 0;
         try {
-            PreparedStatement consulta = conexion.prepareStatement("CALL verificariniciosesion(?,?)");
+            PreparedStatement consulta = conexion.prepareStatement("CALL verificariniciosesion(?,?);");
             consulta.setString(1, login);
             consulta.setString(2, pass);
             ResultSet resultado = consulta.executeQuery();
@@ -76,7 +77,7 @@ public class InicioSesionOperaciones {
     public int cambiarPassword(Connection conexion, String login, String pass, String newpass) throws SQLException{
         int tipo = 0;
         try {
-            PreparedStatement consulta = conexion.prepareStatement("CALL cambiarpass(?,?,?)");
+            PreparedStatement consulta = conexion.prepareStatement("CALL cambiarpass(?,?,?);");
             consulta.setString(1, login);
             consulta.setString(2, pass);
             consulta.setString(3, newpass);
@@ -85,6 +86,7 @@ public class InicioSesionOperaciones {
                 tipo = Integer.parseInt(resultado.getString("resultado"));
             }
         } catch (Exception e) {
+            throw new SQLDataException(e);
         }
         return tipo;
     }
@@ -122,7 +124,7 @@ public class InicioSesionOperaciones {
      public List<InicioSesion> recuperarTodos(Connection conexion) throws SQLException{
         List<InicioSesion> iniciosesion = new ArrayList<>();
         try {
-            PreparedStatement consulta = conexion.prepareStatement("SELECT login, nombre, apellidop, apellidom, genero, email, tipo, fechacreacion, fechamod, ultimaconexion, activo, terminos FROM iniciosesion;");
+            PreparedStatement consulta = conexion.prepareStatement("SELECT login, pass, nombre, apellidop, apellidom, genero, email, tipo, fechacreacion, fechamod, ultimaconexion, activo, terminos FROM iniciosesion;");
             ResultSet resultado = consulta.executeQuery();
             while(resultado.next()){
                 iniciosesion.add(new InicioSesion(resultado.getString("login"), null, resultado.getString("nombre"), resultado.getString("apellidop"), resultado.getString("apellidom"), resultado.getString("genero").charAt(0), resultado.getString("email"), resultado.getInt("tipo"), resultado.getString("fechacreacion"), resultado.getString("fechamod"), resultado.getString("ultimaconexion"), resultado.getBoolean("activo"), resultado.getBoolean("terminos")));
@@ -133,6 +135,32 @@ public class InicioSesionOperaciones {
         return iniciosesion;
     }
     
+    public int cargarColor(Connection conexion, String login) throws SQLException{
+       int color = 0;
+        try {
+            PreparedStatement consulta = conexion.prepareStatement("CALL cargarcolor(?);");
+            consulta.setString(1, login);
+            ResultSet resultado = consulta.executeQuery();
+            if(resultado.next()){
+                color = Integer.parseInt(resultado.getString("color"));
+            }
+        } catch (Exception e) {
+            throw new SQLException(e);
+        }
+        return color; 
+    }
+    
+    public void guardarColor(Connection conexion, String login, int color) throws SQLException{
+        try {
+            Colores.setSeleccion(color);
+            PreparedStatement consulta = conexion.prepareStatement("CALL guardarcolor(?,?);");
+            consulta.setString(1, login);
+            consulta.setInt(2, color);
+            consulta.executeUpdate();
+        } catch (Exception e) {
+            throw new SQLDataException(e);
+        }
+    }
     public static void main(String[] args){
         InicioSesionOperaciones inicioop = new InicioSesionOperaciones();
         try {
@@ -152,11 +180,15 @@ public class InicioSesionOperaciones {
             System.out.println(resultado);
             */
             //Consultar usuarios
+            /*
             List<InicioSesion> sesiones;
             sesiones = inicioop.recuperarTodos(Conexion.obtener());
             for (InicioSesion inicioSesion : sesiones) {
                 System.out.println(inicioSesion.toString());
             }
+            */
+            //Cargar color del perfil
+            System.out.println(inicioop.cargarColor(Conexion.obtener(), "nemesis-umbrella"));
         } catch (Exception e) {
             System.out.println("Error: "+e);
         }
