@@ -190,6 +190,11 @@ create table cuenta(
     fechamod		datetime,
     foreign key(nopoliza) references poliza(nopoliza)
 );
+create table perfilcolor(
+	login 			varchar(50)	 primary key,
+    color			int,
+    foreign key(login) references iniciosesion(login)
+);
 drop procedure if exists igmdiniciosesion;
 delimiter $$
 create procedure igmdiniciosesion(
@@ -208,7 +213,11 @@ if not exists(select * from iniciosesion where login like(_login)) THEN
 	insert into iniciosesion(login,pass,nombre,apellidop,apellidom,genero,email,tipo,fechacreacion,fechamod,ultimaconexion,activo,terminos) 
     values(_login,aes_encrypt(_pass,'OqZ8e5-pz+*LTeHG'),_nombre,_apellidop,_apellidom,_genero,_email,_tipo,now(),null,null,_activo,false);
 ELSE
-	update iniciosesion set pass=aes_encrypt(_pass,'OqZ8e5-pz+*LTeHG'), nombre=_nombre, apellidop=_apellidop,apellidom=_apellidom,genero=_genero,email=_email,fechamod=now(),activo=_activo,terminos=_terminos where login=_login;
+	if _pass = null then
+		update iniciosesion set nombre=_nombre, apellidop=_apellidop,apellidom=_apellidom,genero=_genero,email=_email,fechamod=now(),activo=_activo,terminos=_terminos where login=_login;
+    else
+		update iniciosesion set pass=aes_encrypt(_pass,'OqZ8e5-pz+*LTeHG'), nombre=_nombre, apellidop=_apellidop,apellidom=_apellidom,genero=_genero,email=_email,fechamod=now(),activo=_activo,terminos=_terminos where login=_login;
+    end if;
 END IF;
 END
 $$
@@ -271,6 +280,31 @@ DECLARE _desc VARCHAR(50);
 	-- Significa que el usuario no existe
 	SELECT 0 as 'resultado';
   END IF;
+END;
+$$
+DROP PROCEDURE IF EXISTS cargarcolor;
+DELIMITER $$
+CREATE PROCEDURE cargarcolor(
+IN _login		VARCHAR(50))
+BEGIN
+	IF EXISTS(SELECT * FROM perfilcolor WHERE login = _login) THEN
+		SELECT color FROM perfilcolor WHERE login = _login;
+    ELSE
+		SELECT 0 AS 'color';
+    END IF;
+END;
+$$
+DROP PROCEDURE IF EXISTS guardarcolor;
+DELIMITER $$
+CREATE PROCEDURE guardarcolor(
+IN _login		VARCHAR(50),
+IN _color 		INT)
+BEGIN
+	IF NOT EXISTS(SELECT * FROM perfilcolor WHERE login = _login) THEN
+		INSERT INTO perfilcolor(login,color) VALUES(_login,_color);
+    ELSE
+		UPDATE perfilcolor set color = _color WHERE login = _login;
+    END IF;
 END;
 $$
 CALL igmdiniciosesion('nemesis-umbrella','Ab123456','Jorge Luis','Mondragón','Zarate','M','nemesis_umbrella@outlook.com',1,false,false);
