@@ -5,8 +5,12 @@
  */
 package menuprincipal;
 
+import acercade.AcercaDe;
+import conexion.Conexion;
 import iniciosesion.DialogPerfil;
 import iniciosesion.FormInicioSesion;
+import iniciosesion.FormUsuarios;
+import iniciosesion.InicioSesionOperaciones;
 import iniciosesion.Perfil;
 import java.awt.Color;
 import javax.swing.ImageIcon;
@@ -33,7 +37,8 @@ public class MenuPrincipal extends javax.swing.JFrame {
         //Cofiguración de la ventana
         setTitle("Menú principal");
         setIconImage(new ImageIcon(getClass().getResource("/Images/icono.png")).getImage());
-        getContentPane().setBackground(Colores.colorAzul());
+        getContentPane().setBackground(Colores.cargarColor());
+        setLocationRelativeTo(null);
         
         //Configuración del menubar
         jMenuPerfil.setIcon(new ImageIcon(getClass().getResource("/Images/menu/icon-user.png")));
@@ -164,6 +169,12 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         jLabelDerechos.setText("Copyright © GamersRetail  | Todos los derechos reservados");
 
+        jButtonUsuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonUsuariosActionPerformed(evt);
+            }
+        });
+
         jLabelUsuarios.setText("Usuarios");
 
         jMenu1.setText("Opciones");
@@ -179,15 +190,35 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jMenuColor.setText("Color de fondo");
 
         jMenuDefualt.setText("Default");
+        jMenuDefualt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuDefualtActionPerformed(evt);
+            }
+        });
         jMenuColor.add(jMenuDefualt);
 
         jMenuNegro.setText("Negro");
+        jMenuNegro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuNegroActionPerformed(evt);
+            }
+        });
         jMenuColor.add(jMenuNegro);
 
         jMenuRojo.setText("Rojo");
+        jMenuRojo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuRojoActionPerformed(evt);
+            }
+        });
         jMenuColor.add(jMenuRojo);
 
         jMenuMorado.setText("Morado");
+        jMenuMorado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuMoradoActionPerformed(evt);
+            }
+        });
         jMenuColor.add(jMenuMorado);
 
         jMenu1.add(jMenuColor);
@@ -213,6 +244,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jMenu2.setText("Ayuda");
 
         jMenuAcercaDe.setText("Acerca de");
+        jMenuAcercaDe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuAcercaDeActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuAcercaDe);
 
         jMenuBar1.add(jMenu2);
@@ -223,48 +259,32 @@ public class MenuPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(jLabelTitulo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabelBienvenido)
-                .addGap(145, 145, 145))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(94, 94, 94)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButtonRecHum, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabelDerechos))
+                        .addGap(9, 9, 9)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabelRecHum)
+                            .addComponent(jButtonProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(94, 94, 94)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButtonRecHum, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(9, 9, 9)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabelRecHum)
-                                    .addComponent(jButtonProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(46, 46, 46)
-                                .addComponent(jLabelProducto)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jButtonConta, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButtonNomina, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(19, 19, 19))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabelConta)
-                                .addGap(52, 52, 52))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabelNomina)
-                                .addGap(80, 80, 80)))))
+                        .addGap(46, 46, 46)
+                        .addComponent(jLabelProducto)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButtonConta, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonNomina, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabelConta)
+                        .addGap(33, 33, 33))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabelNomina)
+                        .addGap(61, 61, 61)))
+                .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabelLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(39, 39, 39)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -273,11 +293,23 @@ public class MenuPrincipal extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(77, 77, 77)
                                 .addComponent(jLabelUsuarios)))
-                        .addContainerGap())
+                        .addGap(116, 116, 116))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabelLogistica)
                         .addGap(134, 134, 134))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addComponent(jLabelTitulo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabelLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelBienvenido))
+                .addGap(33, 33, 33))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(160, 160, 160)
+                .addComponent(jLabelDerechos)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -289,31 +321,21 @@ public class MenuPrincipal extends javax.swing.JFrame {
                 .addGap(45, 45, 45)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButtonLogistica, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabelLogistica)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButtonUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabelUsuarios))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButtonConta, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabelConta)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButtonNomina, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabelNomina)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabelDerechos)
-                                .addContainerGap())
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabelLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(20, 20, 20))))
+                        .addComponent(jButtonLogistica, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabelLogistica)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButtonUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabelUsuarios))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButtonConta, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabelConta)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButtonNomina, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabelNomina))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButtonRecHum, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -321,19 +343,16 @@ public class MenuPrincipal extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jButtonProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabelProducto)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addComponent(jLabelProducto)))
+                .addGap(18, 18, 18)
+                .addComponent(jLabelLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addComponent(jLabelDerechos)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jMenuSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuSalirActionPerformed
-        int reply = JOptionPane.showConfirmDialog(null, "¿Estás seguro(a) que deseas salir?", "Cerrar sesión", JOptionPane.YES_NO_OPTION);
-        if (reply == JOptionPane.YES_OPTION) {
-            System.exit(0);
-        }
-    }//GEN-LAST:event_jMenuSalirActionPerformed
 
     private void jButtonLogisticaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLogisticaActionPerformed
         Logistica logistica = new Logistica();
@@ -344,18 +363,73 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonLogisticaActionPerformed
 
     private void jMenuPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuPerfilActionPerformed
-        new DialogPerfil(this, true).setVisible(true);
+        new iniciosesion.DialogPerfil(this, true).setVisible(true);
     }//GEN-LAST:event_jMenuPerfilActionPerformed
 
+    private void jMenuDefualtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuDefualtActionPerformed
+        //Se encarga de guardar y mostrar el color seleccionado por el usuario
+        String error = recursos.Colores.guardarColorNuevo(0);
+        getContentPane().setBackground(recursos.Colores.cargarColor());
+        if(!error.equals("")){
+            javax.swing.JOptionPane.showMessageDialog(null, "Error: "+error);
+        }
+    }//GEN-LAST:event_jMenuDefualtActionPerformed
+
+    private void jMenuNegroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuNegroActionPerformed
+        //Se encarga de guardar y mostrar el color seleccionado por el usuario
+        String error = recursos.Colores.guardarColorNuevo(1);
+        getContentPane().setBackground(recursos.Colores.cargarColor());
+        if(!error.equals("")){
+            javax.swing.JOptionPane.showMessageDialog(null, "Error: "+error);
+        }
+    }//GEN-LAST:event_jMenuNegroActionPerformed
+
+    private void jMenuRojoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuRojoActionPerformed
+        //Se encarga de guardar y mostrar el color seleccionado por el usuario
+        String error = recursos.Colores.guardarColorNuevo(2);
+        getContentPane().setBackground(recursos.Colores.cargarColor());
+        if(!error.equals("")){
+            javax.swing.JOptionPane.showMessageDialog(null, "Error: "+error);
+        }
+    }//GEN-LAST:event_jMenuRojoActionPerformed
+
+    private void jMenuMoradoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuMoradoActionPerformed
+        //Se encarga de guardar y mostrar el color seleccionado por el usuario
+        String error = recursos.Colores.guardarColorNuevo(3);
+        getContentPane().setBackground(recursos.Colores.cargarColor());
+        if(!error.equals("")){
+            javax.swing.JOptionPane.showMessageDialog(null, "Error: "+error);
+        }
+    }//GEN-LAST:event_jMenuMoradoActionPerformed
+
     private void jMenuCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuCerrarSesionActionPerformed
-        int reply = JOptionPane.showConfirmDialog(null, "¿Estás seguro(a) que deseas cerrar sesión?", "Cerrar sesión", JOptionPane.YES_NO_OPTION);
-        if (reply == JOptionPane.YES_OPTION) {
-            Perfil.limpiar();
-            FormInicioSesion inicio = new FormInicioSesion();
+        int reply = javax.swing.JOptionPane.showConfirmDialog(null, "¿Estás seguro(a) que deseas cerrar sesión?", "Cerrar sesión", javax.swing.JOptionPane.YES_NO_OPTION);
+        if (reply == javax.swing.JOptionPane.YES_OPTION) {
+            iniciosesion.Perfil.limpiar();
+            iniciosesion.FormInicioSesion inicio = new iniciosesion.FormInicioSesion();
             inicio.setVisible(true);
             dispose();
         }
     }//GEN-LAST:event_jMenuCerrarSesionActionPerformed
+
+    private void jMenuSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuSalirActionPerformed
+        int reply = javax.swing.JOptionPane.showConfirmDialog(null, "¿Estás seguro(a) que deseas salir?", "Cerrar sesión", javax.swing.JOptionPane.YES_NO_OPTION);
+        if (reply == javax.swing.JOptionPane.YES_OPTION) {
+            System.exit(0);
+        }
+    }//GEN-LAST:event_jMenuSalirActionPerformed
+
+    private void jMenuAcercaDeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuAcercaDeActionPerformed
+        new acercade.AcercaDe(this, true).setVisible(true);
+    }//GEN-LAST:event_jMenuAcercaDeActionPerformed
+
+    private void jButtonUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUsuariosActionPerformed
+        FormUsuarios usuarios = new FormUsuarios();
+        usuarios.setVisible(true);
+        usuarios.setResizable(false);
+        usuarios.setLocationRelativeTo(null);
+        dispose();
+    }//GEN-LAST:event_jButtonUsuariosActionPerformed
 
     /**
      * @param args the command line arguments
