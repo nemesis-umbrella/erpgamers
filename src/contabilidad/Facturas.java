@@ -152,7 +152,7 @@ public class Facturas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnMostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMostrarActionPerformed
-        tablalistado.setModel( mostrar());
+        //tablalistado.setModel( mostrar());
     }//GEN-LAST:event_btnMostrarActionPerformed
 
     /**
