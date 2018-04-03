@@ -18,6 +18,7 @@ import javax.swing.DefaultCellEditor;
 import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.NumberFormatter;
 import recursos.Colores;
@@ -45,7 +46,8 @@ public class FormRuta extends javax.swing.JFrame {
         //Cofiguración de la ventana
         setTitle("Ruta");
         setIconImage(new ImageIcon(getClass().getResource("/Images/icono.png")).getImage());
-        getContentPane().setBackground(Colores.colorAzul());
+        getContentPane().setBackground(Colores.cargarColor());
+        setLocationRelativeTo(null);
 
         //Configuración del menubar
         jMenuPerfil.setIcon(new ImageIcon(getClass().getResource("/Images/menu/icon-user.png")));
@@ -53,7 +55,7 @@ public class FormRuta extends javax.swing.JFrame {
         jMenuCerrarSesion.setIcon(new ImageIcon(getClass().getResource("/Images/menu/cerrar.png")));
         jMenuSalir.setIcon(new ImageIcon(getClass().getResource("/Images/menu/salir.png")));
         jMenuAcercaDe.setIcon(new ImageIcon(getClass().getResource("/Images/menu/acerca.png")));
-        jMenuDefault.setIcon(new ImageIcon(getClass().getResource("/Images/menu/colorAzul.png")));
+        jMenuDefualt.setIcon(new ImageIcon(getClass().getResource("/Images/menu/colorAzul.png")));
         jMenuNegro.setIcon(new ImageIcon(getClass().getResource("/Images/menu/colorNegro.png")));
         jMenuMorado.setIcon(new ImageIcon(getClass().getResource("/Images/menu/colorMorado.png")));
         jMenuRojo.setIcon(new ImageIcon(getClass().getResource("/Images/menu/colorRojo.png")));
@@ -100,6 +102,8 @@ public class FormRuta extends javax.swing.JFrame {
 
     private void inicioTabla() {
         //Método para configurar el DefaultTableModel de la tabla.
+        jTb.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        jTb.doLayout();
         //Especificamos el tamaño de cada columna
         jTb.getColumnModel().getColumn(0).setPreferredWidth(100);
         jTb.getColumnModel().getColumn(1).setPreferredWidth(200);
@@ -197,7 +201,7 @@ public class FormRuta extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         jMenuPerfil = new javax.swing.JMenuItem();
         jMenuColor = new javax.swing.JMenu();
-        jMenuDefault = new javax.swing.JMenuItem();
+        jMenuDefualt = new javax.swing.JMenuItem();
         jMenuNegro = new javax.swing.JMenuItem();
         jMenuRojo = new javax.swing.JMenuItem();
         jMenuMorado = new javax.swing.JMenuItem();
@@ -331,24 +335,54 @@ public class FormRuta extends javax.swing.JFrame {
 
         jMenuColor.setText("Color de fondo");
 
-        jMenuDefault.setText("Default");
-        jMenuColor.add(jMenuDefault);
+        jMenuDefualt.setText("Default");
+        jMenuDefualt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuDefualtActionPerformed(evt);
+            }
+        });
+        jMenuColor.add(jMenuDefualt);
 
         jMenuNegro.setText("Negro");
+        jMenuNegro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuNegroActionPerformed(evt);
+            }
+        });
         jMenuColor.add(jMenuNegro);
 
         jMenuRojo.setText("Rojo");
+        jMenuRojo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuRojoActionPerformed(evt);
+            }
+        });
         jMenuColor.add(jMenuRojo);
 
         jMenuMorado.setText("Morado");
+        jMenuMorado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuMoradoActionPerformed(evt);
+            }
+        });
         jMenuColor.add(jMenuMorado);
 
         jMenu1.add(jMenuColor);
 
         jMenuCerrarSesion.setText("Cerrar sesión");
+        jMenuCerrarSesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuCerrarSesionActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuCerrarSesion);
 
         jMenuSalir.setText("Salir");
+        jMenuSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuSalirActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuSalir);
 
         jMenuBar1.add(jMenu1);
@@ -356,6 +390,11 @@ public class FormRuta extends javax.swing.JFrame {
         jMenu2.setText("Ayuda");
 
         jMenuAcercaDe.setText("Acerca de");
+        jMenuAcercaDe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuAcercaDeActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuAcercaDe);
 
         jMenuBar1.add(jMenu2);
@@ -390,24 +429,27 @@ public class FormRuta extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 832, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(jLabelBusqId)
-                                .addGap(3, 3, 3)
-                                .addComponent(jTextFieldBusqId, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButtonBusqId)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabelBusqAlias)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextFieldBusqAlias, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButtonBusqAlias))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addGap(0, 228, Short.MAX_VALUE)
                                 .addComponent(jLabelDerechos)
                                 .addGap(86, 86, 86)
-                                .addComponent(jButtonRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(jButtonRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addComponent(jLabelBusqId)
+                                        .addGap(3, 3, 3)
+                                        .addComponent(jTextFieldBusqId, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jButtonBusqId)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jLabelBusqAlias)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jTextFieldBusqAlias, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jButtonBusqAlias))
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 837, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -428,24 +470,23 @@ public class FormRuta extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 358, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonRecargar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelDerechos))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonRecargar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                        .addComponent(jLabelDerechos))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButtonRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jMenuPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuPerfilActionPerformed
-
-    }//GEN-LAST:event_jMenuPerfilActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
@@ -592,6 +633,67 @@ public class FormRuta extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jTextFieldBusqAliasKeyTyped
 
+    private void jMenuPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuPerfilActionPerformed
+        new iniciosesion.DialogPerfil(this, true).setVisible(true);
+    }//GEN-LAST:event_jMenuPerfilActionPerformed
+
+    private void jMenuDefualtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuDefualtActionPerformed
+        //Se encarga de guardar y mostrar el color seleccionado por el usuario
+        String error = recursos.Colores.guardarColorNuevo(0);
+        getContentPane().setBackground(recursos.Colores.cargarColor());
+        if(!error.equals("")){
+            javax.swing.JOptionPane.showMessageDialog(null, "Error: "+error);
+        }
+    }//GEN-LAST:event_jMenuDefualtActionPerformed
+
+    private void jMenuNegroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuNegroActionPerformed
+        //Se encarga de guardar y mostrar el color seleccionado por el usuario
+        String error = recursos.Colores.guardarColorNuevo(1);
+        getContentPane().setBackground(recursos.Colores.cargarColor());
+        if(!error.equals("")){
+            javax.swing.JOptionPane.showMessageDialog(null, "Error: "+error);
+        }
+    }//GEN-LAST:event_jMenuNegroActionPerformed
+
+    private void jMenuRojoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuRojoActionPerformed
+        //Se encarga de guardar y mostrar el color seleccionado por el usuario
+        String error = recursos.Colores.guardarColorNuevo(2);
+        getContentPane().setBackground(recursos.Colores.cargarColor());
+        if(!error.equals("")){
+            javax.swing.JOptionPane.showMessageDialog(null, "Error: "+error);
+        }
+    }//GEN-LAST:event_jMenuRojoActionPerformed
+
+    private void jMenuMoradoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuMoradoActionPerformed
+        //Se encarga de guardar y mostrar el color seleccionado por el usuario
+        String error = recursos.Colores.guardarColorNuevo(3);
+        getContentPane().setBackground(recursos.Colores.cargarColor());
+        if(!error.equals("")){
+            javax.swing.JOptionPane.showMessageDialog(null, "Error: "+error);
+        }
+    }//GEN-LAST:event_jMenuMoradoActionPerformed
+
+    private void jMenuCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuCerrarSesionActionPerformed
+        int reply = javax.swing.JOptionPane.showConfirmDialog(null, "¿Estás seguro(a) que deseas cerrar sesión?", "Cerrar sesión", javax.swing.JOptionPane.YES_NO_OPTION);
+        if (reply == javax.swing.JOptionPane.YES_OPTION) {
+            iniciosesion.Perfil.limpiar();
+            iniciosesion.FormInicioSesion inicio = new iniciosesion.FormInicioSesion();
+            inicio.setVisible(true);
+            dispose();
+        }
+    }//GEN-LAST:event_jMenuCerrarSesionActionPerformed
+
+    private void jMenuSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuSalirActionPerformed
+        int reply = javax.swing.JOptionPane.showConfirmDialog(null, "¿Estás seguro(a) que deseas salir?", "Cerrar sesión", javax.swing.JOptionPane.YES_NO_OPTION);
+        if (reply == javax.swing.JOptionPane.YES_OPTION) {
+            System.exit(0);
+        }
+    }//GEN-LAST:event_jMenuSalirActionPerformed
+
+    private void jMenuAcercaDeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuAcercaDeActionPerformed
+        new acercade.AcercaDe(this, true).setVisible(true);
+    }//GEN-LAST:event_jMenuAcercaDeActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -648,7 +750,7 @@ public class FormRuta extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuCerrarSesion;
     private javax.swing.JMenu jMenuColor;
-    private javax.swing.JMenuItem jMenuDefault;
+    private javax.swing.JMenuItem jMenuDefualt;
     private javax.swing.JMenuItem jMenuMorado;
     private javax.swing.JMenuItem jMenuNegro;
     private javax.swing.JMenuItem jMenuPerfil;
