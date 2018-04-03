@@ -5,6 +5,8 @@
  */
 package iniciosesion;
 
+import recursos.Colores;
+
 /**
  *
  * @author Jorge L. Mondragón <nemesis_umbrella@outlook.com>
@@ -91,5 +93,6 @@ public class Perfil {
         Perfil.genero = null;
         Perfil.ultimaconexion = null;
         Perfil.tipo = 0;
+        Colores.setSeleccion(0);
     }
 }
