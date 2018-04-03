@@ -76,6 +76,7 @@ public class FormInicioSesion extends javax.swing.JFrame {
                     int respuesta = iniop.verificarInicio(Conexion.obtener(), user.trim(), pass.trim());
                     if (respuesta > 0) {
                         iniop.cargarDatosUsuario(Conexion.obtener(), user);
+                        Colores.setSeleccion(iniop.cargarColor(Conexion.obtener(), user));
                         switch (respuesta) {
                             case 1:
                                 MenuPrincipal menu = new MenuPrincipal();
