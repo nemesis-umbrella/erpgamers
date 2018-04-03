@@ -5,6 +5,9 @@
  */
 package iniciosesion;
 
+import conexion.Conexion;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Jorge L. Mondragón <nemesis_umbrella@outlook.com>
@@ -19,10 +22,73 @@ public class DialogAgregarUsuario extends java.awt.Dialog {
         initComponents();
         cargarConf();
     }
-    
-    public void cargarConf(){
+
+    public void cargarConf() {
         setTitle("Agregar usuario");
         setLocationRelativeTo(null);
+        jComboBoxTipo.removeAllItems();
+        jComboBoxTipo.addItem("Administrador");
+        jComboBoxTipo.addItem("Ventas");
+        jComboBoxTipo.addItem("Consultor");
+    }
+
+    private void guardar() {
+        InicioSesionOperaciones iniop = new InicioSesionOperaciones();
+        String login = jTextFieldLogin.getText();
+        char[] cPass = jPasswordFieldContra.getPassword();
+        String pass = new String(cPass);
+        String nombre = jTextFieldNombre.getText();
+        String apellidop = jTextFieldApPaterno.getText();
+        String apellidom = jTextFieldApMaterno.getText();
+        String genero = "";
+        String email = jTextFieldEmail.getText();
+        int tipo = jComboBoxTipo.getSelectedIndex() + 1;
+        boolean habilitado = false;
+        if (!login.equals("")) {
+            if (!pass.equals("")) {
+                if (!nombre.equals("")) {
+                    if (!apellidop.equals("")) {
+                        if (!apellidom.equals("")) {
+                            if (jRadioButtonMasculino.isSelected() || jRadioButtonFemenino.isSelected()) {
+                                if (!email.equals("")) {
+                                    if (jCheckBoxHabilitar.isSelected()) {
+                                        habilitado = true;
+                                    }
+                                    if (jRadioButtonMasculino.isSelected()) {
+                                        genero = "M";
+                                    }
+                                    if (jRadioButtonFemenino.isSelected()) {
+                                        genero = "F";
+                                    }
+                                    InicioSesion inicio = new InicioSesion(login, pass, nombre, apellidop, apellidom, genero.charAt(0), email, tipo, genero, null, null, habilitado, false);
+                                    try {
+                                        iniop.guardar(Conexion.obtener(), inicio);
+                                        setVisible(false);
+                                        dispose();
+                                    } catch (Exception e) {
+                                        JOptionPane.showMessageDialog(null, "Error: "+e);
+                                    }
+                                } else {
+                                    JOptionPane.showMessageDialog(null, "Debes ingresar un correo");
+                                }
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Debes especificar un genero");
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Debes ingresar el apellido materno");
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Debes ingresar el apellido paterno");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Debes ingresar un nombre");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Debes ingresar una contraseña");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Debes ingresar un login");
+        }
     }
 
     /**
@@ -123,50 +189,45 @@ public class DialogAgregarUsuario extends java.awt.Dialog {
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel10)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel5))
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextFieldApPaterno)
+                            .addComponent(jTextFieldApMaterno)
+                            .addComponent(jTextFieldEmail)
+                            .addComponent(jComboBoxTipo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel7)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jLabel10)
-                                    .addComponent(jLabel9)
-                                    .addComponent(jLabel8)
-                                    .addComponent(jLabel5))
-                                .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextFieldApPaterno)
-                                    .addComponent(jTextFieldApMaterno)
-                                    .addComponent(jTextFieldEmail)
-                                    .addComponent(jComboBoxTipo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jRadioButtonMasculino)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jRadioButtonFemenino))
-                                            .addComponent(jCheckBoxHabilitar))
-                                        .addGap(0, 0, Short.MAX_VALUE))))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel3))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jPasswordFieldContra)
-                                    .addComponent(jTextFieldNombre)))))
+                                        .addComponent(jRadioButtonMasculino)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jRadioButtonFemenino))
+                                    .addComponent(jCheckBoxHabilitar))
+                                .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel2))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPasswordFieldContra)
+                            .addComponent(jTextFieldNombre)
+                            .addComponent(jTextFieldLogin)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(56, 56, 56)
-                        .addComponent(jLabel2)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTextFieldLogin)))
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -229,7 +290,7 @@ public class DialogAgregarUsuario extends java.awt.Dialog {
     }//GEN-LAST:event_closeDialog
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        //guardar();
+        guardar();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
