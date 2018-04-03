@@ -198,8 +198,8 @@ create table perfilcolor(
 drop procedure if exists igmdiniciosesion;
 delimiter $$
 create procedure igmdiniciosesion(
-IN _login VARCHAR(50),
-IN _pass			blob,
+IN _login varchar(50),
+IN _pass			varchar(50),
 IN _nombre 			varchar(50),
 IN _apellidop 		varchar(50),
 IN _apellidom		varchar(50),
@@ -213,10 +213,10 @@ if not exists(select * from iniciosesion where login like(_login)) THEN
 	insert into iniciosesion(login,pass,nombre,apellidop,apellidom,genero,email,tipo,fechacreacion,fechamod,ultimaconexion,activo,terminos) 
     values(_login,aes_encrypt(_pass,'OqZ8e5-pz+*LTeHG'),_nombre,_apellidop,_apellidom,_genero,_email,_tipo,now(),null,null,_activo,false);
 ELSE
-	if _pass = null then
-		update iniciosesion set nombre=_nombre, apellidop=_apellidop,apellidom=_apellidom,genero=_genero,email=_email,fechamod=now(),activo=_activo,terminos=_terminos where login=_login;
+	if _pass is null then
+		update iniciosesion set nombre=_nombre, apellidop=_apellidop,apellidom=_apellidom,genero=_genero,email=_email,fechamod=now(),activo=_activo where login=_login;
     else
-		update iniciosesion set pass=aes_encrypt(_pass,'OqZ8e5-pz+*LTeHG'), nombre=_nombre, apellidop=_apellidop,apellidom=_apellidom,genero=_genero,email=_email,fechamod=now(),activo=_activo,terminos=_terminos where login=_login;
+		update iniciosesion set pass=aes_encrypt(_pass,'OqZ8e5-pz+*LTeHG'), nombre=_nombre, apellidop=_apellidop,apellidom=_apellidom,genero=_genero,tipo = _tipo,email=_email,fechamod=now(),activo=_activo where login=_login;
     end if;
 END IF;
 END
