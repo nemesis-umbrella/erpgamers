@@ -29,7 +29,7 @@ public class ModificarVehiculo extends javax.swing.JDialog {
     }
 
     private void cargarConf() {
-        setTitle("Agregar vehiculo");
+        setTitle("Modificar vehiculo");
         setLocationRelativeTo(null);
         setResizable(false);
     }
