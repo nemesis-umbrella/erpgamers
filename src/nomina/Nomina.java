@@ -4,11 +4,24 @@
  * and open the template in the editor.
  */
 package nomina;
+
+import java.sql.PreparedStatement;
+import javax.swing.ImageIcon;
+import recursos.Colores;
+
 /**
  *
  * @author poron
  */
 public class Nomina extends javax.swing.JFrame {
+    
+    private void cargarConf() {
+        //Cofiguración de la ventana
+        setTitle("Nomina");
+        setIconImage(new ImageIcon(getClass().getResource("/Images/icono.png")).getImage());
+        getContentPane().setBackground(Colores.cargarColor());
+        setLocationRelativeTo(null);
+                }
 
     /**
      * Creates new form Nomina
@@ -82,6 +95,11 @@ public class Nomina extends javax.swing.JFrame {
         });
 
         consultar.setText("CONSULTAR");
+        consultar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                consultarActionPerformed(evt);
+            }
+        });
 
         modificar.setText("MODIFICAR");
 
@@ -202,6 +220,12 @@ new Pago().setVisible(true);
 dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_siguienteActionPerformed
 
+    private void consultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultarActionPerformed
+
+        
+        // TODO add your handling code here:
+    }//GEN-LAST:event_consultarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -258,4 +282,7 @@ dispose();        // TODO add your handling code here:
     private javax.swing.JLabel tipojornada;
     private javax.swing.JTextField tipojornadatxt;
     // End of variables declaration//GEN-END:variables
+
+    
+        
 }
