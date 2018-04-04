@@ -43,9 +43,7 @@ public class Logistica extends javax.swing.JFrame {
         //Label de rutas
         jLabelRutas.setFont(Fuente.fuenteTexto14());
         jLabelRutas.setForeground(Color.WHITE);
-        //Label de agenda
-        jLabelAgenda.setFont(Fuente.fuenteTexto14());
-        jLabelAgenda.setForeground(Color.WHITE);
+        
         
         //Carga de imagenes a botones
         //Botón de rutas
@@ -54,12 +52,13 @@ public class Logistica extends javax.swing.JFrame {
         //Botón de flota
         jButtonFlotilla.setIcon(Imagenes.ajustarImagen("src/Images/logistica/flotilla.png", jButtonFlotilla.getWidth(), jButtonFlotilla.getHeight()));
         jButtonFlotilla.setBackground(Colores.colorBlancoOsc());
-        //Botón de agenda
-        jButtonAgenda.setIcon(Imagenes.ajustarImagen("src/Images/logistica/agenda.png", jButtonAgenda.getWidth(), jButtonAgenda.getHeight()));
-        jButtonAgenda.setBackground(Colores.colorBlancoOsc());
+        
         //Label de derechos reservados
         jLabelDerechos.setFont(Fuente.fuenteTexto14());
         jLabelDerechos.setForeground(Color.WHITE);
+        
+        //Label de imagen
+        jLabelFondo.setIcon(Imagenes.ajustarImagen("src/Images/logistica/logistica.png", jLabelFondo.getWidth(), jLabelFondo.getHeight()));
         
         //Configuración del menubar
         jMenuPerfil.setIcon(new ImageIcon(getClass().getResource("/Images/menu/icon-user.png")));
@@ -83,14 +82,13 @@ public class Logistica extends javax.swing.JFrame {
     private void initComponents() {
 
         jButtonRuta = new javax.swing.JButton();
-        jButtonAgenda = new javax.swing.JButton();
         jButtonFlotilla = new javax.swing.JButton();
         jButtonRegresar = new javax.swing.JButton();
         jLabelRutas = new javax.swing.JLabel();
         jLabelFlota = new javax.swing.JLabel();
-        jLabelAgenda = new javax.swing.JLabel();
         jLabelTitulo = new javax.swing.JLabel();
         jLabelDerechos = new javax.swing.JLabel();
+        jLabelFondo = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuPerfil = new javax.swing.JMenuItem();
@@ -130,8 +128,6 @@ public class Logistica extends javax.swing.JFrame {
         jLabelRutas.setText("Rutas");
 
         jLabelFlota.setText("Flota");
-
-        jLabelAgenda.setText("Agenda");
 
         jLabelTitulo.setText("Menú logística");
 
@@ -224,18 +220,10 @@ public class Logistica extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(138, 138, 138)
-                                        .addComponent(jLabelAgenda))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(100, 100, 100)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jButtonRuta, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(95, 95, 95)
-                                                .addComponent(jButtonFlotilla, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addComponent(jButtonAgenda, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(100, 100, 100)
+                                .addComponent(jButtonRuta, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(95, 95, 95)
+                                .addComponent(jButtonFlotilla, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 16, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
@@ -245,44 +233,42 @@ public class Logistica extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabelTitulo))
+                            .addGroup(layout.createSequentialGroup()
                                 .addGap(142, 142, 142)
                                 .addComponent(jLabelRutas)
-                                .addGap(201, 201, 201)
-                                .addComponent(jLabelFlota))
-                            .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jLabelTitulo)))
+                                .addGap(198, 198, 198)
+                                .addComponent(jLabelFlota)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabelFondo, javax.swing.GroupLayout.PREFERRED_SIZE, 547, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(38, 38, 38))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addComponent(jLabelTitulo)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButtonRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabelDerechos)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabelTitulo)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(30, 30, 30)
-                                .addComponent(jButtonFlotilla, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButtonRuta, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(30, 30, 30)
+                        .addComponent(jButtonFlotilla, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabelRutas)
-                            .addComponent(jLabelFlota))
-                        .addGap(27, 27, 27)
-                        .addComponent(jButtonAgenda, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabelAgenda)
-                        .addGap(0, 58, Short.MAX_VALUE)))
+                        .addComponent(jButtonRuta, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelRutas)
+                    .addComponent(jLabelFlota))
+                .addGap(18, 18, 18)
+                .addComponent(jLabelFondo, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelDerechos))
                 .addContainerGap())
         );
 
@@ -409,13 +395,12 @@ public class Logistica extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonAgenda;
     private javax.swing.JButton jButtonFlotilla;
     private javax.swing.JButton jButtonRegresar;
     private javax.swing.JButton jButtonRuta;
-    private javax.swing.JLabel jLabelAgenda;
     private javax.swing.JLabel jLabelDerechos;
     private javax.swing.JLabel jLabelFlota;
+    private javax.swing.JLabel jLabelFondo;
     private javax.swing.JLabel jLabelRutas;
     private javax.swing.JLabel jLabelTitulo;
     private javax.swing.JMenu jMenu1;
