@@ -48,7 +48,7 @@ public class DialogModificarUsuario extends java.awt.Dialog {
     }
     
     public void cargarConf() {
-        setTitle("Agregar usuario");
+        setTitle("Modificar usuario");
         setLocationRelativeTo(null);
         jComboBoxTipo.removeAllItems();
         jComboBoxTipo.addItem("Administrador");
@@ -153,7 +153,7 @@ public class DialogModificarUsuario extends java.awt.Dialog {
         });
 
         jLabel1.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
-        jLabel1.setText("Agregar usuario");
+        jLabel1.setText("Modificar usuario");
 
         jLabel2.setText("Login: ");
         jLabel2.setToolTipText("");
