@@ -311,7 +311,8 @@ dispose();        // TODO add your handling code here:
         
         try {
             
-            CallableStatement pst = cn.prepareCall("exec Nomina @matemptxt='"+idp+"'");
+            CallableStatement pst;
+              pst = cn.prepareCall("exec Nomina @matemptxt='"+idp+"'");
                 pst.executeUpdate();
                 JOptionPane.showMessageDialog(null,"Borrado Exitoso, Presione Actualizar");
                 Limpiar();
