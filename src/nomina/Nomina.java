@@ -5,8 +5,15 @@
  */
 package nomina;
 
+import conexion.Conexion;
+import java.sql.CallableStatement;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import recursos.Colores;
 
 /**
@@ -14,6 +21,10 @@ import recursos.Colores;
  * @author poron
  */
 public class Nomina extends javax.swing.JFrame {
+    
+    ResultSet rs;
+    Conexion cc= new Conexion();
+    Statement sent;
     
     private void cargarConf() {
         //Cofiguración de la ventana
@@ -28,6 +39,11 @@ public class Nomina extends javax.swing.JFrame {
      */
     public Nomina() {
         initComponents();
+        setUndecorated(true);
+        setLocationRelativeTo(null);
+        setResizable(false);
+        setTitle("Empleados");
+        mostrarDatos(); 
     }
 
     /**
@@ -102,8 +118,18 @@ public class Nomina extends javax.swing.JFrame {
         });
 
         modificar.setText("MODIFICAR");
+        modificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                modificarActionPerformed(evt);
+            }
+        });
 
         eliminar.setText("ELIMINAR");
+        eliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                eliminarActionPerformed(evt);
+            }
+        });
 
         siguiente.setText("SIGUIENTE");
         siguiente.addActionListener(new java.awt.event.ActionListener() {
@@ -222,9 +248,79 @@ dispose();        // TODO add your handling code here:
 
     private void consultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultarActionPerformed
 
+        Habilitar();
+         String rfc,tipocontrato,tipojornada,fechacreacion,fechamod,matemp;
         
-        // TODO add your handling code here:
+         
+         rfc = rfctxt.getText();
+         tipocontrato = tipocontratotxt.getText();
+         tipojornada =  tipojornadatxt.getText();
+         fechacreacion = fechacreaciontxt.getText();
+         fechamod = fechamodtxt.getText();
+         matemp = matemptxt.getText();
+         
+        
+         // TODO add your handling code here:
     }//GEN-LAST:event_consultarActionPerformed
+
+    private void modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarActionPerformed
+         // TODO add your handling code here:
+         
+        Habilitar();
+        
+      String rfc,tipocontrato,tipojornada,fechacreacion,fechamod,matemp;
+        
+         
+         rfc = rfctxt.getText();
+         tipocontrato = tipocontratotxt.getText();
+         tipojornada =  tipojornadatxt.getText();
+         fechacreacion = fechacreaciontxt.getText();
+         fechamod = fechamodtxt.getText();
+         matemp = matemptxt.getText();
+         try{
+             
+            CallableStatement pst;
+            pst = cn.prepareCall("EXEC Nomina ?,?,?,?,?,?");
+            
+            pst.setString(1, rfc);
+            pst.setString(2, tipocontrato);
+            pst.setString(3, tipojornada);
+            pst.setString(4, fechacreacion);
+            pst.setString(5, fechamod);
+            pst.setString(6, matemp);
+           
+            
+            pst.execute();
+            JOptionPane.showMessageDialog(null,"Modificacion Exitoso, Presione Actualizar");
+            Limpiar();
+            mostrarDatos();
+            
+        }catch (SQLException es){
+            System.out.println("Fallo algo........"+es);
+        }
+        
+        
+    }//GEN-LAST:event_modificarActionPerformed
+
+    private void eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarActionPerformed
+        // TODO add your handling code here:
+        
+          Habilitar();
+        
+        String idp = matemptxt.getText();
+        
+        try {
+            
+            CallableStatement pst = cn.prepareCall("exec Nomina @matemptxt='"+idp+"'");
+                pst.executeUpdate();
+                JOptionPane.showMessageDialog(null,"Borrado Exitoso, Presione Actualizar");
+                Limpiar();
+                mostrarDatos();
+            
+        }catch (SQLException ex) {
+                System.out.print(ex.getMessage());
+        }
+    }//GEN-LAST:event_eliminarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -282,6 +378,18 @@ dispose();        // TODO add your handling code here:
     private javax.swing.JLabel tipojornada;
     private javax.swing.JTextField tipojornadatxt;
     // End of variables declaration//GEN-END:variables
+
+    private void Habilitar() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void Limpiar() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void mostrarDatos() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
     
         

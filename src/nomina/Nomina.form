@@ -203,11 +203,17 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="MODIFICAR"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="modificarActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="eliminar">
       <Properties>
         <Property name="text" type="java.lang.String" value="ELIMINAR"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="eliminarActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="siguiente">
       <Properties>
