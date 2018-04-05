@@ -280,7 +280,7 @@ dispose();        // TODO add your handling code here:
          try{
              
             CallableStatement pst;
-            pst = cn.prepareCall("EXEC Nomina ?,?,?,?,?,?");
+            pst = cn..prepareCall("EXEC Nomina ?,?,?,?,?,?");
             
             pst.setString(1, rfc);
             pst.setString(2, tipocontrato);
