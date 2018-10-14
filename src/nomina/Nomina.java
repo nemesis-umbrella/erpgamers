@@ -247,80 +247,80 @@ dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_siguienteActionPerformed
 
     private void consultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultarActionPerformed
-
-        Habilitar();
-         String rfc,tipocontrato,tipojornada,fechacreacion,fechamod,matemp;
-        
-         
-         rfc = rfctxt.getText();
-         tipocontrato = tipocontratotxt.getText();
-         tipojornada =  tipojornadatxt.getText();
-         fechacreacion = fechacreaciontxt.getText();
-         fechamod = fechamodtxt.getText();
-         matemp = matemptxt.getText();
-         
-        
+//
+//        Habilitar();
+//         String rfc,tipocontrato,tipojornada,fechacreacion,fechamod,matemp;
+//        
+//         
+//         rfc = rfctxt.getText();
+//         tipocontrato = tipocontratotxt.getText();
+//         tipojornada =  tipojornadatxt.getText();
+//         fechacreacion = fechacreaciontxt.getText();
+//         fechamod = fechamodtxt.getText();
+//         matemp = matemptxt.getText();
+//         
+//        
          // TODO add your handling code here:
     }//GEN-LAST:event_consultarActionPerformed
 
     private void modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarActionPerformed
-         // TODO add your handling code here:
-         
-        Habilitar();
-        
-      String rfc,tipocontrato,tipojornada,fechacreacion,fechamod,matemp;
-        
-         
-         rfc = rfctxt.getText();
-         tipocontrato = tipocontratotxt.getText();
-         tipojornada =  tipojornadatxt.getText();
-         fechacreacion = fechacreaciontxt.getText();
-         fechamod = fechamodtxt.getText();
-         matemp = matemptxt.getText();
-         try{
-             
-            CallableStatement pst;
-            pst = cn..prepareCall("EXEC Nomina ?,?,?,?,?,?");
-            
-            pst.setString(1, rfc);
-            pst.setString(2, tipocontrato);
-            pst.setString(3, tipojornada);
-            pst.setString(4, fechacreacion);
-            pst.setString(5, fechamod);
-            pst.setString(6, matemp);
-           
-            
-            pst.execute();
-            JOptionPane.showMessageDialog(null,"Modificacion Exitoso, Presione Actualizar");
-            Limpiar();
-            mostrarDatos();
-            
-        }catch (SQLException es){
-            System.out.println("Fallo algo........"+es);
-        }
-        
+//         // TODO add your handling code here:
+//         
+//        Habilitar();
+//        
+//      String rfc,tipocontrato,tipojornada,fechacreacion,fechamod,matemp;
+//        
+//         
+//         rfc = rfctxt.getText();
+//         tipocontrato = tipocontratotxt.getText();
+//         tipojornada =  tipojornadatxt.getText();
+//         fechacreacion = fechacreaciontxt.getText();
+//         fechamod = fechamodtxt.getText();
+//         matemp = matemptxt.getText();
+//         try{
+//             
+//            CallableStatement pst;
+//            //pst = cn..prepareCall("EXEC Nomina ?,?,?,?,?,?");
+//            
+//            pst.setString(1, rfc);
+//            pst.setString(2, tipocontrato);
+//            pst.setString(3, tipojornada);
+//            pst.setString(4, fechacreacion);
+//            pst.setString(5, fechamod);
+//            pst.setString(6, matemp);
+//           
+//            
+//            pst.execute();
+//            JOptionPane.showMessageDialog(null,"Modificacion Exitoso, Presione Actualizar");
+//            Limpiar();
+//            mostrarDatos();
+//            
+//        }catch (SQLException es){
+//            System.out.println("Fallo algo........"+es);
+//        }
+//        
         
     }//GEN-LAST:event_modificarActionPerformed
 
     private void eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarActionPerformed
-        // TODO add your handling code here:
-        
-          Habilitar();
-        
-        String idp = matemptxt.getText();
-        
-        try {
-            
-            CallableStatement pst;
-              pst = cn.prepareCall("exec Nomina @matemptxt='"+idp+"'");
-                pst.executeUpdate();
-                JOptionPane.showMessageDialog(null,"Borrado Exitoso, Presione Actualizar");
-                Limpiar();
-                mostrarDatos();
-            
-        }catch (SQLException ex) {
-                System.out.print(ex.getMessage());
-        }
+//        // TODO add your handling code here:
+//        
+//          Habilitar();
+//        
+//        String idp = matemptxt.getText();
+//        
+//        try {
+//            
+//            CallableStatement pst;
+//              pst = cn.prepareCall("exec Nomina @matemptxt='"+idp+"'");
+//                pst.executeUpdate();
+//                JOptionPane.showMessageDialog(null,"Borrado Exitoso, Presione Actualizar");
+//                Limpiar();
+//                mostrarDatos();
+//            
+//        }catch (SQLException ex) {
+//                System.out.print(ex.getMessage());
+//        }
     }//GEN-LAST:event_eliminarActionPerformed
 
     /**
